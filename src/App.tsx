@@ -1,3 +1,9 @@
+import { Input } from '@/components/ui/input/input'
+
 export function App() {
-  return <div>Hello</div>
+  return (
+    <div>
+      <Input type={'password'} />
+    </div>
+  )
 }
