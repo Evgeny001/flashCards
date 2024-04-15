@@ -1,4 +1,4 @@
-import { Input } from '@/components/ui/input/Input'
+import { Input } from '@/components/ui/input'
 
 export function App() {
   return (

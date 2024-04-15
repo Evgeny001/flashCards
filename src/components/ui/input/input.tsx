@@ -26,7 +26,7 @@ export type InputProps = {
   type?: 'password' | 'search' | 'text'
 } & ComponentPropsWithoutRef<'input'>
 
-export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref): JSX.Element => {
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     className,
     disabled,
@@ -99,7 +99,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref): JSX.
         )}
       </div>
       {errorMessage && (
-        <Typography as={'span'} variant={'caption'}>
+        <Typography as={'span'} className={s.error} variant={'caption'}>
           {errorMessage}
         </Typography>
       )}
