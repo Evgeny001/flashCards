@@ -1,9 +1,9 @@
-import { Input } from '@/components/ui/input'
+import { RadioItem } from '@/components/ui/radioGroup/radioItem/RadioItem'
 
 export function App() {
   return (
     <div>
-      <Input type={'search'} />
+      <RadioItem label={'JS'} value={'list'} />
     </div>
   )
 }
