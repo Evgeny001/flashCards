@@ -20,26 +20,22 @@ export const RadioItem = forwardRef<ElementRef<typeof Radio.Item>, RadioItemProp
   }
 
   return (
-    <Radio.Root>
-      <div className={classNames.item}>
-        <div className={s.state}>
-          <Radio.Item
-            className={classNames.radio}
-            disabled={disabled}
-            id={value}
-            ref={ref}
-            value={value}
-          >
-            <div className={s.frame}></div>
-            <Radio.Indicator className={classNames.indicator} />
-          </Radio.Item>
-        </div>
-        <Typography as={'span'} variant={'body2'}>
-          {label}
-        </Typography>
+    <div className={classNames.item}>
+      <div className={s.state}>
+        <Radio.Item
+          className={classNames.radio}
+          disabled={disabled}
+          id={value}
+          ref={ref}
+          value={value}
+        >
+          <div className={s.frame}></div>
+          <Radio.Indicator className={classNames.indicator} />
+        </Radio.Item>
       </div>
-    </Radio.Root>
+      <Typography as={'span'} variant={'body2'}>
+        {label}
+      </Typography>
+    </div>
   )
 })
-// <Radio.Root></Radio.Root> added just to see the rendering because RadioGroupItem
-// must be used within Radio.Root
