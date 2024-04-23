@@ -17,14 +17,24 @@ export type SelectProps = {
   placeholder?: string
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
-export const Select = ({ defaultValue, disabled, label, options, placeholder }: SelectProps) => {
+export const Select = ({
+  defaultValue,
+  disabled,
+  label,
+  options,
+  placeholder,
+  ...rest
+}: SelectProps) => {
   return (
     <div className={s.wrapper}>
       <Typography className={s.title} variant={'body2'}>
         {label}
       </Typography>
       {/*приоритет значений по дефолту: placeholder -> defaultValue -> options[0].value */}
-      <SelectRadix.Root defaultValue={!placeholder ? defaultValue ?? options[0].value : undefined}>
+      <SelectRadix.Root
+        defaultValue={!placeholder ? defaultValue ?? options[0].value : undefined}
+        {...rest}
+      >
         <SelectRadix.Trigger
           className={`${s.trigger} ${disabled && s.disabled} `}
           disabled={disabled}
