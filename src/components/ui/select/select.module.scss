@@ -17,7 +17,10 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 6px 0;
+  min-width: 20px;
+  padding: 0 6px;
+
+  //padding: 6px 0;
 
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
@@ -34,6 +37,7 @@
   }
 
   &:hover {
+    cursor: pointer;
     background-color: var(--color-dark-100);
   }
 
@@ -54,7 +58,7 @@
 }
 
 .value {
-  padding-left: 12px;
+  padding-left: 2px;
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   color: var(--color-light-100);
@@ -62,22 +66,26 @@
 
 .icon {
   display: flex;
-  padding-right: 12px;
+  padding-right: 2px;
   color: var(--color-light-100);
 }
 
 .content {
   overflow: hidden;
+  display: flex;
 
   width: var(--radix-select-trigger-width);
+  min-width: 20px;
   max-height: var(--radix-select-content-available-height);
+
+  //padding: 0 6px;
 
   background-color: var(--color-dark-900);
   border: 1px solid var(--color-dark-300);
-  border-radius: 2px;
 }
 
 .item {
+  cursor: pointer;
   user-select: none;
 
   position: relative;
@@ -85,8 +93,8 @@
   display: flex;
   align-items: center;
 
-  height: 36px;
-  padding: 6px 12px;
+  height: 25px;
+  padding: 0 8px;
 
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
