@@ -1,3 +1,9 @@
+import { BaseTable } from '@/components/ui/table/baseTable '
+
 export function App() {
-  return <div></div>
+  return (
+    <div>
+      <BaseTable />
+    </div>
+  )
 }
