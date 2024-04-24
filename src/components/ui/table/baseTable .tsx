@@ -1,23 +1,32 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui/table/table'
+
 import s from './table.module.scss'
 export const BaseTable = () => {
   return (
-    <table className={s.table}>
-      <thead>
-        <tr>
-          <th className={s.th}>Name</th>
-          <th className={s.th}>Cards</th>
-          <th className={s.th}>Last Updated</th>
-          <th className={s.th}>Created by</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td className={s.td}>Pack Name</td>
-          <td className={s.td}>4</td>
-          <td className={s.td}>18.03.2021</td>
-          <td className={s.td}>Ivan Ivanov</td>
-        </tr>
-      </tbody>
-    </table>
+    <Table className={s.table}>
+      <TableHead>
+        <TableRow>
+          <TableHeadCell className={s.th}>Name</TableHeadCell>
+          <TableHeadCell className={s.th}>Cards</TableHeadCell>
+          <TableHeadCell className={s.th}>Last Updated</TableHeadCell>
+          <TableHeadCell className={s.th}>Created by</TableHeadCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        <TableRow>
+          <TableCell className={s.td}>Pack Name</TableCell>
+          <TableCell className={s.td}>4</TableCell>
+          <TableCell className={s.td}>18.03.2021</TableCell>
+          <TableCell className={s.td}>Ivan Ivanov</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   )
 }
