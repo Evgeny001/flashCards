@@ -1,11 +1,12 @@
 import { ArrowLeft } from '@/assets/icons/ArrowLeft'
 import { ArrowRight } from '@/assets/icons/ArrowRight'
-import { DOTS, usePagination } from '@/components/ui/pagination/usePagination'
-import { Select } from '@/components/ui/select/select'
-import { Typography } from '@/components/ui/typography'
 import clsx from 'clsx'
 
 import s from './pagination.module.scss'
+
+import { Select } from '../select'
+import { Typography } from '../typography'
+import { DOTS, usePagination } from './usePagination'
 
 type PaginationConditionals = {
   onPerPageChange: (itemPerPage: string) => void
