@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { CheckIcon } from '@/assets/icons/CheckIcon'
 import { Typography } from '@/components/ui/typography'
@@ -6,31 +6,39 @@ import * as CheckboxRadix from '@radix-ui/react-checkbox'
 
 import s from './checkbox.module.scss'
 
-type CheckboxProps = {
+export type CheckboxProps = {
   // checked?: CheckedState
   // defaultChecked?: CheckedState
   disabled?: boolean
+  errorMessage?: string
   id?: string
   label?: string
 } & ComponentPropsWithoutRef<typeof CheckboxRadix.Root>
 
-export const Checkbox = (props: CheckboxProps) => {
-  const { disabled, id, label } = props
-
-  return (
-    <div style={{ alignItems: 'center', display: 'flex' }}>
-      <div className={s.wrapper}>
-        <div className={s.around}>
-          <CheckboxRadix.Root className={s.CheckboxRoot} disabled={disabled} id={id}>
-            <CheckboxRadix.Indicator className={s.CheckboxIndicator}>
-              <CheckIcon />
-            </CheckboxRadix.Indicator>
-          </CheckboxRadix.Root>
+export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, CheckboxProps>(
+  ({ disabled, errorMessage, id, label, ...rest }, ref) => {
+    return (
+      <div style={{ alignItems: 'center', display: 'flex' }}>
+        <div className={s.wrapper}>
+          <div className={s.around}>
+            <CheckboxRadix.Root
+              className={s.CheckboxRoot}
+              disabled={disabled}
+              id={id}
+              ref={ref}
+              {...rest}
+            >
+              <CheckboxRadix.Indicator className={s.CheckboxIndicator}>
+                <CheckIcon />
+              </CheckboxRadix.Indicator>
+            </CheckboxRadix.Root>
+          </div>
         </div>
+        <Typography as={'label'} htmlFor={id} variant={'body2'}>
+          {label}
+        </Typography>
+        {errorMessage && <h3>{errorMessage}</h3>}
       </div>
-      <Typography as={'label'} htmlFor={id} variant={'body2'}>
-        {label}
-      </Typography>
-    </div>
-  )
-}
+    )
+  }
+)
