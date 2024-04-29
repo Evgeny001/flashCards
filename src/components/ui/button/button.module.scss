@@ -4,7 +4,7 @@
 
   cursor: pointer;
 
-  // display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -15,6 +15,7 @@
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
   color: inherit;
+  text-align: center;
 
   border: 0;
   border-radius: 4px;
