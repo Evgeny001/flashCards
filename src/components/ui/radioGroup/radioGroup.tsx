@@ -8,13 +8,13 @@ export type Option = {
   label: string
   value: string
 }
-type Props = {
+export type RadioGroupProps = {
   disabled?: boolean
   name: string
   onValueChange?: (value: string) => void
   options: Option[]
 } & ComponentPropsWithoutRef<typeof Radio.Root>
-export const RadioGroup = forwardRef<ElementRef<typeof Radio.Root>, Props>(
+export const RadioGroup = forwardRef<ElementRef<typeof Radio.Root>, RadioGroupProps>(
   ({ name, options, ...restProps }, ref) => {
     const classNames = {
       box: s.box,
