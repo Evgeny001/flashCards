@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
-import { ControlledRadioGroup } from '@/components/ui/controlled/controlled-radioGroup'
+import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
+import { ControlledRadioGroup } from '@/components/ui/controlled/controlled-radioGroup/controlled-radioGroup'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
