@@ -75,6 +75,12 @@
 }
 
 .link1,
+.link2 {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link1,
 .link1:link,
 .link1:visited {
   font-size: var(--font-size-s);
@@ -90,4 +96,9 @@
   font-weight: var(--font-weight-regular);
   line-height: 1rem;
   color: var(--color-info-500);
+}
+
+.link1:hover,
+.link2:hover {
+  color: var(--color-info-300);
 }
