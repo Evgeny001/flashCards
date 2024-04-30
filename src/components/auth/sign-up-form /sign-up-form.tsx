@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { DevTool } from '@hookform/devtools'
 
 export type FormValues = {
   email: string
@@ -42,6 +43,7 @@ export const SignUpForm = () => {
 
   return (
     <>
+      <DevTool control={control} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input {...register('email')} errorMessage={errors.email?.message} type={'text'} />
         <Input {...register('pass')} errorMessage={errors.pass?.message} type={'password'} />
@@ -50,7 +52,7 @@ export const SignUpForm = () => {
           errorMessage={errors?.passConfirm?.message}
           type={'password'}
         />
-        <Button type={'submit'}>Submit</Button>
+        <Button type={'submit'}>Sign Up</Button>
       </form>
     </>
   )
