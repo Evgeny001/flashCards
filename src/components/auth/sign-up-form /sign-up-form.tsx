@@ -2,9 +2,10 @@ import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Typography } from '@/components/ui/typography'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { DevTool } from '@hookform/devtools'
 
 export type FormValues = {
   email: string
@@ -45,14 +46,32 @@ export const SignUpForm = () => {
     <>
       <DevTool control={control} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input {...register('email')} errorMessage={errors.email?.message} type={'text'} />
-        <Input {...register('pass')} errorMessage={errors.pass?.message} type={'password'} />
+        <Input
+          {...register('email')}
+          errorMessage={errors.email?.message}
+          label={'Email'}
+          placeholder={'name@example.com'}
+          type={'text'}
+        />
+        <Input
+          {...register('pass')}
+          errorMessage={errors.pass?.message}
+          label={'Password'}
+          placeholder={'your password'}
+          type={'password'}
+        />
         <Input
           {...register('passConfirm')}
           errorMessage={errors?.passConfirm?.message}
+          label={'Confirm Password'}
+          placeholder={'confirm your password'}
           type={'password'}
         />
         <Button type={'submit'}>Sign Up</Button>
+        <Typography>Already have an account?</Typography>
+        <Typography as={'a'} variant={'link1'}>
+          Sign In
+        </Typography>
       </form>
     </>
   )
