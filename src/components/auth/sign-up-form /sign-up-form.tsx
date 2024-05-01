@@ -1,11 +1,14 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card/card'
 import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import s from './sign-up-form.module.scss'
 
 export type FormValues = {
   email: string
@@ -44,35 +47,47 @@ export const SignUpForm = () => {
 
   return (
     <>
-      <DevTool control={control} />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          {...register('email')}
-          errorMessage={errors.email?.message}
-          label={'Email'}
-          placeholder={'name@example.com'}
-          type={'text'}
-        />
-        <Input
-          {...register('pass')}
-          errorMessage={errors.pass?.message}
-          label={'Password'}
-          placeholder={'your password'}
-          type={'password'}
-        />
-        <Input
-          {...register('passConfirm')}
-          errorMessage={errors?.passConfirm?.message}
-          label={'Confirm Password'}
-          placeholder={'confirm your password'}
-          type={'password'}
-        />
-        <Button type={'submit'}>Sign Up</Button>
-        <Typography>Already have an account?</Typography>
-        <Typography as={'a'} variant={'link1'}>
-          Sign In
+      <Card className={s.cardBox}>
+        <Typography className={s.formHeader} variant={'h1'}>
+          Sign Up
         </Typography>
-      </form>
+        <DevTool control={control} />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className={s.form}>
+            <Input
+              {...register('email')}
+              className={s.inputs}
+              errorMessage={errors.email?.message}
+              label={'Email'}
+              placeholder={'name@example.com'}
+              type={'text'}
+            />
+            <Input
+              {...register('pass')}
+              className={s.inputs}
+              errorMessage={errors.pass?.message}
+              label={'Password'}
+              placeholder={'your password'}
+              type={'password'}
+            />
+            <Input
+              {...register('passConfirm')}
+              className={s.inputs}
+              errorMessage={errors?.passConfirm?.message}
+              label={'Confirm Password'}
+              placeholder={'confirm your password'}
+              type={'password'}
+            />
+            <Button className={s.button} type={'submit'}>
+              Sign Up
+            </Button>
+            <Typography className={s.caption}>Already have an account?</Typography>
+            <Typography as={'a'} className={s.signInLink} variant={'link1'}>
+              Sign In
+            </Typography>
+          </div>
+        </form>
+      </Card>
     </>
   )
 }
