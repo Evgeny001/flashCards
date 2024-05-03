@@ -10,12 +10,17 @@ import { Typography } from '../typography'
 export type AvatarProps = {
   fallbackLabel?: string
   src?: string
+  variant?: 'large' | 'small'
 } & ComponentPropsWithoutRef<typeof AvatarRadix.Root>
 
 export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, AvatarProps>(
-  ({ className, fallbackLabel = 'No avatar', src, ...rest }, ref) => {
+  ({ className, fallbackLabel = 'No avatar', src, variant = 'large', ...rest }, ref) => {
     return (
-      <AvatarRadix.Root className={clsx(s.wrapperAvatar, className)} ref={ref} {...rest}>
+      <AvatarRadix.Root
+        className={clsx(s.wrapperAvatar, className, s[variant])}
+        ref={ref}
+        {...rest}
+      >
         <AvatarRadix.Image alt={'avatar'} className={s.image} loading={'lazy'} src={src} />
         <AvatarRadix.Fallback>
           <Typography as={'p'} variant={'subtitle2'}>
