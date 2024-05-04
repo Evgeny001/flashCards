@@ -15,6 +15,12 @@ type Story = StoryObj<typeof meta>
 
 export const PaginationDefault: Story = {
   args: {
+    currentPage: 1,
+    onChangePage: (page: number) => {
+      page++
+    },
+    onPerPageChange: () => {},
+    pageSize: 10,
     perPageOptions: ['10', '20', '50'],
     siblingCount: 1,
     totalCount: 100,
