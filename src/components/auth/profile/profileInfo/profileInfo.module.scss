@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .wrapperName {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    justify-content: center;
+
+    .edit {
+      cursor: pointer;
+    }
+  }
+
+  .email {
+    margin-bottom: 13px;
+    color: var(--color-dark-100);
+  }
+}
