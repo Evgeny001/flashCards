@@ -1,20 +1,49 @@
 .wrapper {
   display: flex;
+  gap: 10px;
   align-items: center;
+
+  label {
+    cursor: pointer;
+    color: var(--color-light-100);
+  }
 }
 
-.CheckboxRoot {
-  position: relative;
+.checkboxRoot {
+  cursor: pointer;
 
-  display: flex;
-  justify-content: center;
+  position: relative;
+  top: 0;
 
   width: 18px;
   height: 18px;
 
-  background: transparent;
-  border: white solid 2px;
-  border-radius: 4px;
+  background-color: transparent;
+  border: 2px solid var(--color-light-900);
+  border-radius: 2px;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    border-color: var(--color-dark-100);
+
+    & ~ label {
+      cursor: not-allowed;
+      color: var(--color-dark-100);
+    }
+  }
 
   &:disabled::before {
     display: none;
@@ -24,7 +53,8 @@
     background-color: var(--color-dark-500);
   }
 
-  &:focus-visible::before {
+  &:focus-visible::before,
+  &:focus::before {
     background-color: var(--color-dark-100);
     outline: none;
   }
@@ -34,38 +64,8 @@
   }
 }
 
-.CheckboxRoot:hover {
-  background-color: var(--color-dark-500);
-}
-
-.CheckboxRoot:active {
-  background-color: var(--color-dark-100);
-}
-
-// .CheckboxRoot:focus {
-//  background-color: green;
-// }
-
-.CheckboxIndicator {
+.checkboxIndicator {
   position: absolute;
   top: -2px;
   left: -2px;
-}
-
-.around {
-  padding: 10px;
-  border: none;
-  border-radius: 100%;
-}
-
-.around:focus-within {
-  background: var(--color-dark-100);
-}
-
-.around:hover {
-  background: var(--color-dark-500);
-}
-
-.around:active {
-  background: var(--color-dark-100);
 }
