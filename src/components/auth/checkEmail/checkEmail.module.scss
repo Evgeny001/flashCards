@@ -1,0 +1,21 @@
+.card {
+  padding: 37px 36px 44px;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 348px;
+
+    .wrapperIcon {
+      margin-top: 27px;
+      margin-bottom: 19px;
+    }
+
+    .description {
+      margin-bottom: 65px;
+      color: var(--color-light-300);
+      text-align: center;
+    }
+  }
+}
