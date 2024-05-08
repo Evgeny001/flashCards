@@ -1,4 +1,4 @@
-import { Profile, ProfileData } from '@/components/auth/profile/Profile'
+import { Profile, ProfileData } from '@/components/auth/profile/profile'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

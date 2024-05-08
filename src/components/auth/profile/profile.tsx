@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import { EditTwoOutline } from '@/assets/icons/EditTwoOutline'
-import { ProfileEditMode } from '@/components/auth/profile/profileEditMode/ProfileEditMode'
-import { ProfileInfo } from '@/components/auth/profile/profileInfo/ProfileInfo'
+import { ProfileEditMode } from '@/components/auth/profile/profileEditMode/profileEditMode'
+import { ProfileInfo } from '@/components/auth/profile/profileInfo/profileInfo'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card/card'
