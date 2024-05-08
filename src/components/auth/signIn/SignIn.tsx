@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card/card'
@@ -64,7 +65,7 @@ export const SignIn = ({ onSubmit }: SignInProps) => {
           <Typography className={s.text} variant={'body2'}>
             {"Don't have an account?"}
           </Typography>
-          <Typography as={'a'} className={s.signUp} variant={'link1'}>
+          <Typography as={Link} className={s.signUp} to={'/SignUp'} variant={'link1'}>
             Sign Up
           </Typography>
         </div>
