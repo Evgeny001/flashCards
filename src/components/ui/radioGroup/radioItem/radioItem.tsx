@@ -33,7 +33,7 @@ export const RadioItem = forwardRef<ElementRef<typeof Radio.Item>, RadioItemProp
           <Radio.Indicator className={classNames.indicator} />
         </Radio.Item>
       </div>
-      <Typography as={'span'} variant={'body2'}>
+      <Typography as={'label'} htmlFor={value} variant={'body2'}>
         {label}
       </Typography>
     </div>
