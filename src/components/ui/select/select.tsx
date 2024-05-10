@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef } from 'react'
 import { ArrowDown } from '@/assets/icons/ArrowDown'
 import { Typography } from '@/components/ui/typography'
 import * as SelectRadix from '@radix-ui/react-select'
+import clsx from 'clsx'
 
 import s from './select.module.scss'
 
@@ -15,6 +16,7 @@ export type SelectProps = {
   label?: string
   options: OptionsValue[]
   placeholder?: string
+  variant?: 'pagination'
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
 export const Select = ({
@@ -23,8 +25,18 @@ export const Select = ({
   label,
   options,
   placeholder,
+  variant,
   ...rest
 }: SelectProps) => {
+  const classNames = {
+    content: clsx(s.content, variant === 'pagination' && s.paginationContent),
+    trigger: clsx(
+      s.trigger,
+      disabled && s.disabled,
+      variant === 'pagination' && s.paginationTrigger
+    ),
+  }
+
   return (
     <div className={s.wrapper}>
       <Typography className={s.title} variant={'body2'}>
@@ -35,19 +47,18 @@ export const Select = ({
         defaultValue={!placeholder ? defaultValue ?? options[0].value : undefined}
         {...rest}
       >
-        <SelectRadix.Trigger
-          className={`${s.trigger} ${disabled && s.disabled} `}
-          disabled={disabled}
-        >
-          <div className={s.value}>
-            <SelectRadix.Value placeholder={placeholder} />
-          </div>
+        <SelectRadix.Trigger className={classNames.trigger} disabled={disabled}>
+          <SelectRadix.Value placeholder={placeholder} />
           <SelectRadix.Icon className={s.icon}>
             <ArrowDown />
           </SelectRadix.Icon>
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
-          <SelectRadix.Content className={`${s.content}`} collisionPadding={0} position={'popper'}>
+          <SelectRadix.Content
+            className={classNames.content}
+            collisionPadding={0}
+            position={'popper'}
+          >
             <SelectRadix.Viewport>
               <SelectRadix.Group>
                 {options?.map(option => (

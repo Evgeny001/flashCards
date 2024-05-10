@@ -115,7 +115,7 @@ export const Pagination = ({
 
       <Typography as={'div'} className={s.wrapperSelect} variant={'body2'}>
         Показать
-        {<Select onValueChange={onPerPageChange} options={selectOptions} />}
+        {<Select onValueChange={onPerPageChange} options={selectOptions} variant={'pagination'} />}
         на странице
       </Typography>
     </div>
