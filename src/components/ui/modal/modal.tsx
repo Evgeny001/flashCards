@@ -1,36 +1,48 @@
-// your-dialog.jsx
-import React from 'react'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
+import Close from '@/assets/icons/Close'
+import { Card } from '@/components/ui/card'
+import { Typography } from '@/components/ui/typography'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Cross1Icon } from '@radix-ui/react-icons'
 
-export const DialogContent = React.forwardRef(({ children, ...props }, forwardedRef) => (
-  <DialogPrimitive.>
-    <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay />
-      <DialogPrimitive.Content {...props} ref={forwardedRef}>
-        {children}
-        <DialogPrimitive.Close aria-label="Close">
-          <Cross1Icon />
-        </DialogPrimitive.Close>
-      </DialogPrimitive.Content>
-    </DialogPrimitive.Portal>
-  </DialogPrimitive.>
-))
+import s from './modal.module.scss'
 
-export const Dialog = DialogPrimitive.Root
-export const DialogTrigger = DialogPrimitive.Trigger
+export type ModalProps = {
+  children: ReactNode
+  showCloseIcon?: boolean
+  onOpenChange: (open: boolean) => void
+  open?: boolean
+  title?: string
+  trigger?: ReactNode
+} & ComponentPropsWithoutRef<typeof DialogPrimitive.Root>
+export const Modal = (props: ModalProps) => {
+  const { children, showCloseIcon = true, open = false, title, onOpenChange, trigger } = props
 
-export default () => (
-  <Dialog.Root>
-    <Dialog.Trigger />
-    <Dialog.Portal>
-      <Dialog.Overlay />
-      <Dialog.Content>
-        <Dialog.Title />
-        <Dialog.Description />
-        <Dialog.Close />
-      </Dialog.Content>
-    </Dialog.Portal>
-  </Dialog.Root>
-)
+  return (
+    <DialogPrimitive.Root {...props} onOpenChange={onOpenChange} open={open}>
+      <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+      {open && (
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay className={s.overlay} />
+          <DialogPrimitive.Content className={s.content}>
+            <Card>
+              <header className={s.header}>
+                {title && (
+                  <DialogPrimitive.Title>
+                    <Typography variant={'h3'}>{title}</Typography>
+                  </DialogPrimitive.Title>
+                )}
+                {showCloseIcon && (
+                  <DialogPrimitive.Close className={s.closeButton}>
+                    <Close />
+                  </DialogPrimitive.Close>
+                )}
+              </header>
+              <div>{children}</div>
+            </Card>
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      )}
+    </DialogPrimitive.Root>
+  )
+}
