@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
-import { Input } from '@/components/ui/input'
+import { ControlledInput } from '@/components/ui/controlled/controlled-input'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -28,7 +28,6 @@ export const SignIn = ({ onSubmit }: SignInProps) => {
     control,
     formState: { errors },
     handleSubmit,
-    register,
   } = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
   })
@@ -40,11 +39,17 @@ export const SignIn = ({ onSubmit }: SignInProps) => {
       </Typography>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={s.inputs}>
-          <Input errorMessage={errors.email?.message} {...register('email')} label={'Email'} />
-          <Input
-            {...register('password')}
+          <ControlledInput
+            control={control}
+            errorMessage={errors.email?.message}
+            label={'Email'}
+            name={'email'}
+          />
+          <ControlledInput
+            control={control}
             errorMessage={errors.password?.message}
             label={'Password'}
+            name={'password'}
           />
         </div>
         <ControlledCheckbox
