@@ -26,3 +26,13 @@ export type DecksResponce = {
   items: Deck[]
   pagination: Pagination
 }
+
+export interface GetDecksArgs {
+  authorId?: string
+  currentPage?: number
+  itemsPerPage?: number
+  maxCardsCount?: number
+  minCardsCount?: number
+  name?: string
+  orderBy?: string
+}
