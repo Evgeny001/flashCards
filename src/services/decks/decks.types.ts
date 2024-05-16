@@ -36,3 +36,20 @@ export interface GetDecksArgs {
   name?: string
   orderBy?: string
 }
+
+export type CreateDeckArgs = {
+  cover?: string
+  isPrivate?: boolean
+  name: string
+}
+
+export type DeleteDeckArgs = {
+  id: string
+}
+
+export type updateDecksArgs = {
+  cover?: string
+  id: string
+  isPrivate?: boolean
+  name?: string
+}
