@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 1006px;
+  height: 100%;
+  margin: 0 auto;
+
+  // width: 70%;
+
+  .controlPanel {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+  }
+}
+
+.tabs {
+  margin-bottom: 24px;
+}
+
+.paginationWrapper {
+  //display: flex;
+  //justify-content: center;
+  margin-top: 24px;
+}
