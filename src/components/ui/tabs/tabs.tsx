@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
 import * as TabsRadix from '@radix-ui/react-tabs'
+import { clsx } from 'clsx'
 
 import s from './tabs.module.scss'
 
@@ -17,10 +18,10 @@ export type Props = {
 } & ComponentPropsWithoutRef<typeof TabsRadix.Root>
 
 export const Tabs = (props: Props) => {
-  const { tabs, title, ...rest } = props
+  const { className, tabs, title, ...rest } = props
 
   return (
-    <div className={s.wrapperTabs}>
+    <div className={clsx(s.wrapperTabs, className)}>
       {title && (
         <Typography as={'span'} className={s.title} variant={'body2'}>
           {title}

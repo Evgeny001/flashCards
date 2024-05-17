@@ -13,16 +13,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
+import { Deck } from '@/services/decks/decks.types'
 
 import s from './decks-table.module.scss'
-
-export type Deck = {
-  cardsCount: number
-  createdBy: string
-  id: string
-  lastUpdated: string
-  name: string
-}
 
 type Props = {
   decks: Deck[] | undefined
@@ -50,14 +43,15 @@ export const DecksTable = ({ decks, onDeleteClick, onEditClick }: Props) => {
       <TableBody>
         {decks?.map(deck => (
           <TableRow key={deck.id}>
-            <TableCell>
+            <TableCell className={s.name}>
+              {deck.cover && <img alt={''} className={s.img} src={deck.cover} />}
               <Typography as={Link} to={`/decks/${deck.id}`} variant={'body2'}>
                 {deck.name}
               </Typography>
             </TableCell>
             <TableCell>{deck.cardsCount}</TableCell>
-            <TableCell>{new Date(deck.lastUpdated).toLocaleString('ru-ru')}</TableCell>
-            <TableCell>{deck.createdBy}</TableCell>
+            <TableCell>{new Date(deck.updated).toLocaleString('ru-ru')}</TableCell>
+            <TableCell>{deck.author.name}</TableCell>
             <TableCell>
               <div className={s.iconsContainer}>
                 <Button as={Link} to={`/decks/${deck.id}/learn`} variant={'icon'}>
