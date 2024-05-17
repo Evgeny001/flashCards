@@ -9,8 +9,8 @@ import { Typography } from '../typography'
 import { DOTS, usePagination } from './usePagination'
 
 type PaginationConditionals = {
+  itemsPerPage: number
   onPerPageChange: (itemPerPage: string) => void
-  //perPage: number
   perPageOptions: string[]
 }
 

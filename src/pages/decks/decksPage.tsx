@@ -88,6 +88,7 @@ export function DecksPage() {
       <div className={s.paginationWrapper}>
         <Pagination
           currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
           onChangePage={setCurrentPage}
           onPerPageChange={value => setItemsPerPage(+value)}
           perPageOptions={['5', '10', '20', '50']}
