@@ -12,7 +12,7 @@ export type Props = {
 }
 
 export const Slider = (props: Props) => {
-  const { max = 100, min = 1, onValueChange, value } = props
+  const { max = 100, min = 0, onValueChange, value } = props
 
   return (
     <div className={s.wrapper}>
