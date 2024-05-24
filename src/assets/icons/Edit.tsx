@@ -2,7 +2,7 @@ import { ComponentPropsWithRef } from 'react'
 
 type Props = ComponentPropsWithRef<'svg'>
 
-export const Delete = ({ className, onClick, ...rest }: Props) => {
+export const Edit = ({ className, onClick, ...rest }: Props) => {
   return (
     <svg
       className={className}
