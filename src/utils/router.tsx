@@ -9,11 +9,16 @@ import {
 import { SignIn } from '@/components/auth/signIn'
 import { Layout } from '@/components/layout/layout'
 import { DecksPage } from '@/pages/decks/decksPage'
+import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
 
 const publicRoutes: RouteObject[] = [
   {
     element: <SignIn onSubmit={() => {}} />,
     path: '/login',
+  },
+  {
+    element: <PageNotFound />,
+    path: '/*',
   },
 ]
 
@@ -38,11 +43,12 @@ export const router = createBrowserRouter([
       {
         children: privateRoutes,
         element: <PrivateRoutes />,
+        errorElement: <PageNotFound />,
       },
       ...publicRoutes,
     ],
     element: <Layout />,
-    errorElement: <div>error</div>,
+    errorElement: <PageNotFound />,
     path: '/',
   },
 ])
