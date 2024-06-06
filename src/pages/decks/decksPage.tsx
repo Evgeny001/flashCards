@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { Tabs } from '@/components/ui/tabs'
+import { PageContainer } from '@/pages/pageContainer/pageContainer'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -52,11 +53,8 @@ export function DecksPage() {
   }
 
   return (
-    <div className={s.wrapper}>
-      <div>
-        <Link to={'/login'}>login</Link>
-      </div>
-
+    <PageContainer>
+      {/*<div className={s.wrapper}>*/}
       <div className={s.controlPanel}>
         <Input onChangeValue={setSearch} value={search} />
         <Tabs
@@ -131,6 +129,10 @@ export function DecksPage() {
           +
         </Button>
       </div>
-    </div>
+      {/*</div>*/}
+      <div>
+        <Link to={'/login'}>login</Link>
+      </div>
+    </PageContainer>
   )
 }
