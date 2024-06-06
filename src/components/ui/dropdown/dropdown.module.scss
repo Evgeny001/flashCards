@@ -3,15 +3,16 @@
   align-items: center;
   justify-content: center;
 }
+
 .trigger {
   all: unset;
-  background-color: transparent;
   cursor: pointer;
   background-color: transparent;
 }
 
 .dropdownContent {
   cursor: pointer;
+
   padding: 12px;
 
   background-color: var(--color-dark-500);

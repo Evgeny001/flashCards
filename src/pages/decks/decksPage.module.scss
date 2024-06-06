@@ -1,20 +1,23 @@
-.wrapper {
+//.wrapper {
+//  display: flex;
+//  flex-direction: column;
+//  justify-content: center;
+//
+//  width: 100%;
+//  max-width: 1006px;
+//  height: 100%;
+//  margin: 0 auto;
+//
+//  // width: 70%;
+//}
+
+.controlPanel {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  gap: 25px;
+  align-items: center;
+  justify-content: space-between;
 
   width: 100%;
-  max-width: 1006px;
-  height: 100%;
-  margin: 0 auto;
-
-  // width: 70%;
-
-  .controlPanel {
-    display: flex;
-    gap: 25px;
-    align-items: center;
-  }
 }
 
 .tabs {

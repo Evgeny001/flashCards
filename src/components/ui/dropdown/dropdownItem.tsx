@@ -7,5 +7,5 @@ import s from './dropdown.module.scss'
 
 type Props = ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>
 export const DropDownItem = ({ className, ...rest }: Props) => {
-  return <DropdownMenuRadix.Item className={clsx(s.dropdownMenuItem, className)} {...rest} />
+  return <DropdownMenuRadix.Item className={clsx(s.dropdownItem, className)} {...rest} />
 }
