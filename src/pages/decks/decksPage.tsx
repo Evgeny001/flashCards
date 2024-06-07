@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 import { TrashOutline } from '@/assets/icons/TrashOutline'
 import { DecksTable } from '@/components/decks/decks-table'
@@ -9,24 +8,32 @@ import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { Tabs } from '@/components/ui/tabs'
 import { PageContainer } from '@/pages/pageContainer/pageContainer'
+import { useGetMeQuery } from '@/services/auth/auth.services'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
+  useGetMinMaxCardsQuery,
   useUpdateDeckMutation,
 } from '@/services/decks/decks.services'
 
 import s from './decksPage.module.scss'
 
 export function DecksPage() {
+  const { data: minMaxData } = useGetMinMaxCardsQuery()
+
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [minSlider, setMinSlider] = useState(0)
   const [maxSlider, setMaxSlider] = useState(50)
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [itemsPerPage, setItemsPerPage] = useState(5)
   const [tabValue, setTabValue] = useState('All Cards')
 
-  const authorId = tabValue === 'My Cards' ? 'f2be95b9-4d07-4751-a775-bd612fc9553a' : undefined
+  const { data: me } = useGetMeQuery()
+
+  const currentUserId = me?.id
+
+  const authorId = tabValue === 'My Cards' ? currentUserId : undefined
 
   const { data, error, isError, isLoading } = useGetDecksQuery({
     authorId,
@@ -41,6 +48,12 @@ export function DecksPage() {
   const [deleteDeck] = useDeleteDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
 
+  useEffect(() => {
+    if (minMaxData) {
+      setMaxSlider(minMaxData.max)
+    }
+  }, [minMaxData])
+
   if (isLoading) {
     return <div>Loading...</div>
   }
@@ -52,11 +65,21 @@ export function DecksPage() {
     deleteDeck({ id })
   }
 
+  const handleEditClick = (id: string) => {
+    // TODO: edit card
+  }
+
+  const clearFilter = () => {
+    setSearch('')
+    setTabValue('All Cards')
+    setMinSlider(minMaxData?.min ?? 0)
+    setMaxSlider(minMaxData?.max ?? 50)
+  }
+
   return (
     <PageContainer>
-      {/*<div className={s.wrapper}>*/}
       <div className={s.controlPanel}>
-        <Input onChangeValue={setSearch} value={search} />
+        <Input onChangeValue={setSearch} type={'search'} value={search} />
         <Tabs
           className={s.tabs}
           onValueChange={value => setTabValue(value)}
@@ -68,19 +91,26 @@ export function DecksPage() {
           value={tabValue}
         />
         <Slider
+          max={minMaxData?.max ?? 50}
+          min={minMaxData?.min ?? 0}
           onValueChange={value => {
             setMinSlider(value[0])
             setMaxSlider(value[1])
           }}
           value={[minSlider, maxSlider]}
         />
-        <Button variant={'secondary'}>
+        <Button onClick={clearFilter} variant={'secondary'}>
           <TrashOutline />
           Clear Filter
         </Button>
       </div>
       <div>
-        <DecksTable decks={data?.items} onDeleteClick={handleDeleteClick} />
+        <DecksTable
+          currentUserId={currentUserId ?? ''}
+          decks={data?.items}
+          onDeleteClick={handleDeleteClick}
+          onEditClick={handleEditClick}
+        />
       </div>
 
       <div className={s.paginationWrapper}>
@@ -90,7 +120,7 @@ export function DecksPage() {
           onChangePage={setCurrentPage}
           onPerPageChange={value => setItemsPerPage(+value)}
           perPageOptions={['5', '10', '20', '50']}
-          totalCount={50}
+          totalCount={data?.pagination.totalPages ?? 0}
         />
       </div>
       <div className={s.controlPanel}>
@@ -128,10 +158,6 @@ export function DecksPage() {
         >
           +
         </Button>
-      </div>
-      {/*</div>*/}
-      <div>
-        <Link to={'/login'}>login</Link>
       </div>
     </PageContainer>
   )

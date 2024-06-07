@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { EditTwoOutline } from '@/assets/icons/EditTwoOutline'
 import { PlayCircleOutline } from '@/assets/icons/PlayCircleOutline'
 import { TrashOutline } from '@/assets/icons/TrashOutline'
+import defaultImage from '@/assets/images/default-image.jpg'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -18,6 +19,7 @@ import { Deck } from '@/services/decks/decks.types'
 import s from './decks-table.module.scss'
 
 type Props = {
+  currentUserId: string
   decks: Deck[] | undefined
   onDeleteClick?: (id: string) => void
   onEditClick?: (id: string) => void
@@ -25,9 +27,13 @@ type Props = {
   //sort: Sort
 }
 
-export const DecksTable = ({ decks, onDeleteClick, onEditClick }: Props) => {
+export const DecksTable = ({ currentUserId, decks, onDeleteClick, onEditClick }: Props) => {
   const handleEditClick = (id: string) => () => onEditClick?.(id)
   const handleDeleteClick = (id: string) => () => onDeleteClick?.(id)
+
+  if (!decks?.length) {
+    return <>No results found with these parameters</>
+  }
 
   return (
     <Table>
@@ -44,7 +50,11 @@ export const DecksTable = ({ decks, onDeleteClick, onEditClick }: Props) => {
         {decks?.map(deck => (
           <TableRow key={deck.id}>
             <TableCell className={s.name}>
-              {deck.cover && <img alt={''} className={s.img} src={deck.cover} />}
+              {deck.cover ? (
+                <img alt={"deck's image"} className={s.img} src={deck.cover} />
+              ) : (
+                <img alt={'no image'} className={s.img} src={defaultImage} />
+              )}
               <Typography as={Link} to={`/decks/${deck.id}`} variant={'body2'}>
                 {deck.name}
               </Typography>
@@ -54,15 +64,19 @@ export const DecksTable = ({ decks, onDeleteClick, onEditClick }: Props) => {
             <TableCell>{deck.author.name}</TableCell>
             <TableCell>
               <div className={s.iconsContainer}>
+                {deck.author.id === currentUserId && (
+                  <Button onClick={handleEditClick(deck.id)} variant={'icon'}>
+                    <EditTwoOutline />
+                  </Button>
+                )}
                 <Button as={Link} to={`/decks/${deck.id}/learn`} variant={'icon'}>
                   <PlayCircleOutline />
                 </Button>
-                <Button onClick={handleEditClick(deck.id)} variant={'icon'}>
-                  <EditTwoOutline />
-                </Button>
-                <Button onClick={handleDeleteClick(deck.id)} variant={'icon'}>
-                  <TrashOutline />
-                </Button>
+                {deck.author.id === currentUserId && (
+                  <Button onClick={handleDeleteClick(deck.id)} variant={'icon'}>
+                    <TrashOutline />
+                  </Button>
+                )}
               </div>
             </TableCell>
           </TableRow>
