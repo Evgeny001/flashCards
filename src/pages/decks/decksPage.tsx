@@ -66,6 +66,7 @@ export function DecksPage() {
   }
 
   const handleEditClick = (id: string) => {
+    console.log(id)
     // TODO: edit card
   }
 
