@@ -6,19 +6,16 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { SignIn } from '@/components/auth/signIn'
 import { Layout } from '@/components/layout/layout'
 import { DecksPage } from '@/pages/decks/decksPage'
+import { LearnPage } from '@/pages/learnPage/learnPage'
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
+import { SignInPage } from '@/pages/signInPage/signInPage'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <SignIn onSubmit={() => {}} />,
+    element: <SignInPage />,
     path: '/login',
-  },
-  {
-    element: <PageNotFound />,
-    path: '/*',
   },
 ]
 
@@ -26,6 +23,14 @@ const privateRoutes: RouteObject[] = [
   {
     element: <DecksPage />,
     path: '/',
+  },
+  // {
+  //   element: <DeckPage />,
+  //   path: '/decks/:deckId',
+  // },
+  {
+    element: <LearnPage />,
+    path: '/decks/:deckId/learn',
   },
 ]
 
