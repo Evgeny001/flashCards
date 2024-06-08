@@ -9,8 +9,8 @@ import { Typography } from '../typography'
 import { DOTS, usePagination } from './usePagination'
 
 type PaginationConditionals = {
+  itemsPerPage: number
   onPerPageChange: (itemPerPage: string) => void
-  //perPage: number
   perPageOptions: string[]
 }
 
@@ -18,7 +18,6 @@ export type PaginationProps = {
   className?: string
   currentPage: number
   onChangePage: (page: number) => void
-  pageSize: number
   siblingCount?: number
   totalCount: number
 } & PaginationConditionals
@@ -28,7 +27,6 @@ export const Pagination = ({
   currentPage,
   onChangePage,
   onPerPageChange,
-  pageSize,
   //perPage,
   perPageOptions,
   siblingCount = 1,
@@ -36,7 +34,6 @@ export const Pagination = ({
 }: PaginationProps) => {
   const paginationRange = usePagination({
     currentPage,
-    pageSize,
     siblingCount,
     totalCount,
   })

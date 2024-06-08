@@ -8,13 +8,13 @@ import s from './avatar.module.scss'
 import { Typography } from '../typography'
 
 export type AvatarProps = {
-  fallbackLabel?: string
+  name?: string
   src?: string
   variant?: 'large' | 'small'
 } & ComponentPropsWithoutRef<typeof AvatarRadix.Root>
 
 export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, AvatarProps>(
-  ({ className, fallbackLabel = 'No avatar', src, variant = 'large', ...rest }, ref) => {
+  ({ className, name, src, variant = 'large', ...rest }, ref) => {
     return (
       <AvatarRadix.Root
         className={clsx(s.wrapperAvatar, className, s[variant])}
@@ -24,7 +24,7 @@ export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, AvatarProp
         <AvatarRadix.Image alt={'avatar'} className={s.image} loading={'lazy'} src={src} />
         <AvatarRadix.Fallback>
           <Typography as={'p'} variant={'subtitle2'}>
-            {fallbackLabel}
+            {name ? name[0] : ''}
           </Typography>
         </AvatarRadix.Fallback>
       </AvatarRadix.Root>
