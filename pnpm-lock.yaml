@@ -117,6 +117,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.22
         version: 18.2.23
+      '@types/react-redux':
+        specifier: ^7.1.33
+        version: 7.1.33
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.2.0
         version: 7.5.0(@typescript-eslint/parser@7.5.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0)(typescript@5.4.3)
@@ -2033,6 +2036,9 @@ packages:
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
 
+  '@types/hoist-non-react-statics@3.3.5':
+    resolution: {integrity: sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==}
+
   '@types/http-errors@2.0.4':
     resolution: {integrity: sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==}
 
@@ -2080,6 +2086,9 @@ packages:
 
   '@types/react-dom@18.2.23':
     resolution: {integrity: sha512-ZQ71wgGOTmDYpnav2knkjr3qXdAFu0vsk8Ci5w3pGAIdj7/kKAyn+VsQDhXsmzzzepAiI9leWMmubXz690AI/A==}
+
+  '@types/react-redux@7.1.33':
+    resolution: {integrity: sha512-NF8m5AjWCkert+fosDsN3hAlHzpjSiXlVy9EgQEmLoBhaNXbmyeGs/aj5dQzKuF+/q+S7JQagorGDW8pJ28Hmg==}
 
   '@types/react@18.2.73':
     resolution: {integrity: sha512-XcGdod0Jjv84HOC7N5ziY3x+qL0AfmubvKOZ9hJjJ2yd5EE+KYjWhdOjt387e9HPheHkdggF9atTifMRtyAaRA==}
@@ -4436,6 +4445,9 @@ packages:
     resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
     peerDependencies:
       redux: ^5.0.0
+
+  redux@4.2.1:
+    resolution: {integrity: sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w==}
 
   redux@5.0.1:
     resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
@@ -7618,6 +7630,11 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.2
 
+  '@types/hoist-non-react-statics@3.3.5':
+    dependencies:
+      '@types/react': 18.2.73
+      hoist-non-react-statics: 3.3.2
+
   '@types/http-errors@2.0.4': {}
 
   '@types/json-schema@7.0.15': {}
@@ -7655,6 +7672,13 @@ snapshots:
   '@types/react-dom@18.2.23':
     dependencies:
       '@types/react': 18.2.73
+
+  '@types/react-redux@7.1.33':
+    dependencies:
+      '@types/hoist-non-react-statics': 3.3.5
+      '@types/react': 18.2.73
+      hoist-non-react-statics: 3.3.2
+      redux: 4.2.1
 
   '@types/react@18.2.73':
     dependencies:
@@ -10280,6 +10304,10 @@ snapshots:
   redux-thunk@3.1.0(redux@5.0.1):
     dependencies:
       redux: 5.0.1
+
+  redux@4.2.1:
+    dependencies:
+      '@babel/runtime': 7.24.1
 
   redux@5.0.1: {}
 

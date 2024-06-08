@@ -8,7 +8,7 @@ import {
 
 import { Layout } from '@/components/layout/layout'
 import { DecksPage } from '@/pages/decks/decksPage'
-import { LearnPage } from '@/pages/learnPage/learnPage'
+
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
 import { SignInPage } from '@/pages/signInPage/signInPage'
 
@@ -29,7 +29,7 @@ const privateRoutes: RouteObject[] = [
   //   path: '/decks/:deckId',
   // },
   {
-    element: <LearnPage />,
+    // element: <LearnPage />,
     path: '/decks/:deckId/learn',
   },
 ]
