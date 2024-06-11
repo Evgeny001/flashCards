@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { TrashOutline } from '@/assets/icons/TrashOutline'
 import { DecksTable } from '@/components/decks/decks-table'
+import { DeleteDeckDialog } from '@/components/decks/deleteDeckDialog/deleteDeckDialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Pagination } from '@/components/ui/pagination'
@@ -28,6 +29,7 @@ export function DecksPage() {
   const [maxSlider, setMaxSlider] = useState(50)
   const [itemsPerPage, setItemsPerPage] = useState(5)
   const [tabValue, setTabValue] = useState('All Cards')
+  const [deckToDeleteId, setDeckToDeleteId] = useState<null | string>(null)
 
   const { data: me } = useGetMeQuery()
 
@@ -43,6 +45,8 @@ export function DecksPage() {
     minCardsCount: minSlider,
     name: search,
   })
+
+  const deckToDeleteName = data?.items?.find(deck => deck.id === deckToDeleteId)?.name
 
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
@@ -62,7 +66,7 @@ export function DecksPage() {
   }
 
   const handleDeleteClick = (id: string) => {
-    deleteDeck({ id })
+    setDeckToDeleteId(id)
   }
 
   const handleEditClick = (id: string) => {
@@ -79,6 +83,16 @@ export function DecksPage() {
 
   return (
     <PageContainer>
+      <DeleteDeckDialog
+        deckName={deckToDeleteName ?? 'Selected deck'}
+        onCancel={() => setDeckToDeleteId(null)}
+        onConfirm={() => {
+          deleteDeck({ id: deckToDeleteId ?? '' })
+          setDeckToDeleteId(null)
+        }}
+        onOpenChange={() => setDeckToDeleteId(null)}
+        open={!!deckToDeleteId}
+      />
       <div className={s.controlPanel}>
         <Input onChangeValue={setSearch} type={'search'} value={search} />
         <Tabs
