@@ -15,8 +15,6 @@ export type Deck = {
   userId: string
 }
 
-export type DeckResponse = Deck
-
 export type Pagination = {
   currentPage: number
   itemsPerPage: number

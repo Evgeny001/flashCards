@@ -2,7 +2,6 @@ import { baseApi } from '@/services/base-api'
 import {
   CreateDeckArgs,
   Deck,
-  DeckResponse,
   DecksResponce,
   DeleteDeckArgs,
   GetDecksArgs,
@@ -27,9 +26,6 @@ export const decksService = baseApi.injectEndpoints({
           method: 'DELETE',
           url: `v1/decks/${args.id}`,
         }),
-      }),
-      getDeckById: builder.query<DeckResponse, { id: string }>({
-        query: ({ id }) => `v1/decks/${id}`,
       }),
       getDecks: builder.query<DecksResponce, GetDecksArgs | void>({
         providesTags: ['Decks'],
@@ -59,7 +55,6 @@ export const decksService = baseApi.injectEndpoints({
 export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
-  useGetDeckByIdQuery,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
   useUpdateDeckMutation,

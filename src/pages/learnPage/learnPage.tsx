@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 import { PageContainer } from '@/pages/pageContainer/pageContainer'
-import { useGetDeckByIdQuery } from '@/services/decks/decks.services'
+import { useGetDeckByIdQuery } from '@/services/deck/deck.services'
 
 import s from './learnPage.module.scss'
 export const LearnPage = () => {
