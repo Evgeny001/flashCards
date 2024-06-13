@@ -6,7 +6,7 @@ import { Dialog, DialogProps } from '@/components/ui/dialog'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './DeckDialog.module.scss'
+import s from './deckDialog.module.scss'
 
 const newDeckSchema = z.object({
   isPrivate: z.boolean(),
