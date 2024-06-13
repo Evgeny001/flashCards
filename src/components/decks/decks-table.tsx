@@ -65,15 +65,20 @@ export const DecksTable = ({ currentUserId, decks, onDeleteClick, onEditClick }:
             <TableCell>
               <div className={s.iconsContainer}>
                 {deck.author.id === currentUserId && (
-                  <Button onClick={handleEditClick(deck.id)} variant={'icon'}>
+                  <Button className={s.icon} onClick={handleEditClick(deck.id)} variant={'icon'}>
                     <EditTwoOutline />
                   </Button>
                 )}
-                <Button as={Link} to={`/decks/${deck.id}/learn`} variant={'icon'}>
+                <Button
+                  as={Link}
+                  className={s.icon}
+                  to={`/decks/${deck.id}/learn`}
+                  variant={'icon'}
+                >
                   <PlayCircleOutline />
                 </Button>
                 {deck.author.id === currentUserId && (
-                  <Button onClick={handleDeleteClick(deck.id)} variant={'icon'}>
+                  <Button className={s.icon} onClick={handleDeleteClick(deck.id)} variant={'icon'}>
                     <TrashOutline />
                   </Button>
                 )}

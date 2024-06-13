@@ -24,6 +24,10 @@
 
   border: 0;
   border-radius: 4px;
+
+  svg {
+    margin-right: 10px;
+  }
 }
 
 *:disabled {
@@ -89,13 +93,6 @@ a {
 }
 
 .icon {
-  align-items: center;
-
-  width: 20px;
-  height: 20px;
-
-  // line-height: 19px;
-
   background-color: black;
   border: none;
 
@@ -106,8 +103,4 @@ a {
       }
     }
   }
-}
-
-svg {
-  margin-right: 10px;
 }

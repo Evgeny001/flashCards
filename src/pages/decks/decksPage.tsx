@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { TrashOutline } from '@/assets/icons/TrashOutline'
+import { DeckDialog, FormValues } from '@/components/decks/DeckDialog/deckDialog'
 import { DecksTable } from '@/components/decks/decks-table'
 import { DeleteDeckDialog } from '@/components/decks/deleteDeckDialog/deleteDeckDialog'
 import { Button } from '@/components/ui/button'
@@ -8,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { Tabs } from '@/components/ui/tabs'
+import { Typography } from '@/components/ui/typography'
 import { PageContainer } from '@/pages/pageContainer/pageContainer'
 import { useGetMeQuery } from '@/services/auth/auth.services'
 import {
@@ -30,6 +32,10 @@ export function DecksPage() {
   const [itemsPerPage, setItemsPerPage] = useState(5)
   const [tabValue, setTabValue] = useState('All Cards')
   const [deckToDeleteId, setDeckToDeleteId] = useState<null | string>(null)
+  const [deckToEditId, setDeckToEditId] = useState<null | string>(null)
+  const [showCreateNewDeckDialog, setShowCreateNewDeckDialog] = useState(false)
+
+  const showEditDeckDialog = !!deckToEditId
 
   const { data: me } = useGetMeQuery()
 
@@ -47,8 +53,9 @@ export function DecksPage() {
   })
 
   const deckToDeleteName = data?.items?.find(deck => deck.id === deckToDeleteId)?.name
+  const deckToEditName = data?.items?.find(deck => deck.id === deckToEditId)?.name
 
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
 
@@ -70,8 +77,7 @@ export function DecksPage() {
   }
 
   const handleEditClick = (id: string) => {
-    console.log(id)
-    // TODO: edit card
+    setDeckToEditId(id)
   }
 
   const clearFilter = () => {
@@ -81,8 +87,38 @@ export function DecksPage() {
     setMaxSlider(minMaxData?.max ?? 50)
   }
 
+  const onCreateNewDeck = () => {
+    setShowCreateNewDeckDialog(true)
+  }
+
+  const onConfirmEditDeck = (data: FormValues) => {
+    if (deckToEditId) {
+      updateDeck({ id: deckToEditId, ...data })
+    }
+  }
+
+  const onConfirmCreateDeck = (data: FormValues) => {
+    createDeck(data)
+  }
+
   return (
     <PageContainer>
+      <DeckDialog
+        confirmText={'Add new deck'}
+        onCancel={() => setShowCreateNewDeckDialog(false)}
+        onConfirm={onConfirmCreateDeck}
+        onOpenChange={setShowCreateNewDeckDialog}
+        open={showCreateNewDeckDialog}
+        title={'Create new deck'}
+      />
+      <DeckDialog
+        confirmText={'Confirm changes'}
+        onCancel={() => setDeckToEditId(null)}
+        onConfirm={onConfirmEditDeck}
+        onOpenChange={() => setDeckToEditId(null)}
+        open={showEditDeckDialog}
+        title={'Edit deck ' + deckToEditName}
+      />
       <DeleteDeckDialog
         deckName={deckToDeleteName ?? 'Selected deck'}
         onCancel={() => setDeckToDeleteId(null)}
@@ -93,6 +129,12 @@ export function DecksPage() {
         onOpenChange={() => setDeckToDeleteId(null)}
         open={!!deckToDeleteId}
       />
+      <div className={s.header}>
+        <Typography variant={'h1'}>Decks List</Typography>
+        <Button onClick={onCreateNewDeck} variant={'primary'}>
+          Add New Deck
+        </Button>
+      </div>
       <div className={s.controlPanel}>
         <Input onChangeValue={setSearch} type={'search'} value={search} />
         <Tabs
@@ -137,42 +179,6 @@ export function DecksPage() {
           perPageOptions={['5', '10', '20', '50']}
           totalCount={data?.pagination.totalPages ?? 0}
         />
-      </div>
-      <div className={s.controlPanel}>
-        <Button
-          onClick={() =>
-            updateDeck({
-              id: 'clw89frlx02aho1015fc9zkrx',
-              name: 'new name',
-            })
-          }
-        >
-          updateDeck
-        </Button>
-        <Button
-          disabled={isDeckBeingCreated}
-          onClick={() =>
-            createDeck({
-              name: 'ololo',
-            })
-          }
-        >
-          create deck
-        </Button>
-        <Button
-          onClick={() => {
-            setCurrentPage(v => (v < 1 ? 1 : v - 1))
-          }}
-        >
-          -
-        </Button>
-        <Button
-          onClick={() => {
-            setCurrentPage(v => v + 1)
-          }}
-        >
-          +
-        </Button>
       </div>
     </PageContainer>
   )
