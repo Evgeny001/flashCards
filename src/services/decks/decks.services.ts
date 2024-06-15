@@ -14,6 +14,43 @@ export const decksService = baseApi.injectEndpoints({
     return {
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
+          const invalidateBy = decksService.util.selectInvalidatedBy(getState(), [
+            { type: 'Decks' },
+          ])
+          //const patchResults: any[] = []
+
+          try {
+            const { data } = await queryFulfilled
+
+            invalidateBy.forEach(({ originalArgs }) => {
+              //patchResults.push(
+              dispatch(
+                decksService.util.updateQueryData('getDecks', originalArgs, draft => {
+                  //console.log(current(draft))
+                  // const itemToUpdateIndex = draft.items.findIndex(deck => deck.id === id)
+                  //
+                  // if (itemToUpdateIndex === -1) {
+                  //   return
+                  // }
+                  // Object.assign(draft.items[itemToUpdateIndex], args)
+                  if (originalArgs.currentPage !== 1) {
+                    return
+                  }
+                  draft.items.unshift(data)
+                  //draft.items.pop()
+                })
+              )
+              //)
+            })
+            console.log(invalidateBy)
+          } catch (e) {
+            // patchResults.forEach(patchResult => {
+            //   patchResult.undo()
+            // })
+            console.log(e)
+          }
+        },
         query: args => ({
           body: args,
           method: 'POST',
@@ -42,6 +79,37 @@ export const decksService = baseApi.injectEndpoints({
       }),
       updateDeck: builder.mutation<Deck, updateDecksArgs>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted({ cover, id, ...args }, { dispatch, getState, queryFulfilled }) {
+          const invalidateBy = decksService.util.selectInvalidatedBy(getState(), [
+            { type: 'Decks' },
+          ])
+          const patchResults: any[] = []
+
+          invalidateBy.forEach(({ originalArgs }) => {
+            patchResults.push(
+              dispatch(
+                decksService.util.updateQueryData('getDecks', originalArgs, draft => {
+                  //console.log(current(draft))
+                  const itemToUpdateIndex = draft.items.findIndex(deck => deck.id === id)
+
+                  if (itemToUpdateIndex === -1) {
+                    return
+                  }
+                  Object.assign(draft.items[itemToUpdateIndex], args)
+                })
+              )
+            )
+          })
+          console.log(invalidateBy)
+
+          try {
+            await queryFulfilled
+          } catch (e) {
+            patchResults.forEach(patchResult => {
+              patchResult.undo()
+            })
+          }
+        },
         query: ({ id, ...args }) => ({
           body: args,
           method: 'PATCH',
