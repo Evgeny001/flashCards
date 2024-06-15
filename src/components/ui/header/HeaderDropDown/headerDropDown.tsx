@@ -15,7 +15,7 @@ type Props = {
 }
 
 export const HeaderDropDown = ({ profileData }: Props) => {
-  const trigger = <Avatar name={'Leonid'} variant={'small'} />
+  const trigger = <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />
 
   const logout = () => {
     console.log('logout')
@@ -28,7 +28,10 @@ export const HeaderDropDown = ({ profileData }: Props) => {
   }
 
   return (
-    <div>
+    <div className={s.wrapper}>
+      <Typography className={s.profileName} variant={'subtitle1'}>
+        {profileData.name}
+      </Typography>
       <DropdownMenu trigger={trigger}>
         <DropDownItem className={s.avatar}>
           <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />

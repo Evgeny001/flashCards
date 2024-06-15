@@ -24,7 +24,7 @@ export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, AvatarProp
         <AvatarRadix.Image alt={'avatar'} className={s.image} loading={'lazy'} src={src} />
         <AvatarRadix.Fallback>
           <Typography as={'p'} variant={'subtitle2'}>
-            {name ? name[0] : ''}
+            {name ? name[0].toUpperCase() : ''}
           </Typography>
         </AvatarRadix.Fallback>
       </AvatarRadix.Root>
