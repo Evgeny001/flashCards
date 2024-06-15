@@ -15,7 +15,14 @@ type Props = {
 }
 
 export const HeaderDropDown = ({ profileData }: Props) => {
-  const trigger = <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />
+  const trigger = (
+    <div className={s.wrapper}>
+      <Typography className={s.profileName} variant={'subtitle1'}>
+        {profileData.name}
+      </Typography>
+      <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />
+    </div>
+  )
 
   const logout = () => {
     console.log('logout')
@@ -28,31 +35,26 @@ export const HeaderDropDown = ({ profileData }: Props) => {
   }
 
   return (
-    <div className={s.wrapper}>
-      <Typography className={s.profileName} variant={'subtitle1'}>
-        {profileData.name}
-      </Typography>
-      <DropdownMenu trigger={trigger}>
-        <DropDownItem className={s.avatar}>
-          <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />
-          <div className={s.info}>
-            <Typography variant={'subtitle1'}>{profileData.name}</Typography>
-            <Typography variant={'caption'}>{profileData.email}</Typography>
-          </div>
-        </DropDownItem>
-        <DropdownSeparator />
-        <DropdownItemWithIcon
-          icon={<PersonOutline className={s.icon} />}
-          onSelect={toProfile}
-          value={'My Profile'}
-        />
-        <DropdownSeparator />
-        <DropdownItemWithIcon
-          icon={<LogOut className={s.icon} />}
-          onSelect={logout}
-          value={'Log Out'}
-        />
-      </DropdownMenu>
-    </div>
+    <DropdownMenu trigger={trigger}>
+      <DropDownItem className={s.avatar}>
+        <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />
+        <div className={s.info}>
+          <Typography variant={'subtitle1'}>{profileData.name}</Typography>
+          <Typography variant={'caption'}>{profileData.email}</Typography>
+        </div>
+      </DropDownItem>
+      <DropdownSeparator />
+      <DropdownItemWithIcon
+        icon={<PersonOutline className={s.icon} />}
+        onSelect={toProfile}
+        value={'My Profile'}
+      />
+      <DropdownSeparator />
+      <DropdownItemWithIcon
+        icon={<LogOut className={s.icon} />}
+        onSelect={logout}
+        value={'Log Out'}
+      />
+    </DropdownMenu>
   )
 }

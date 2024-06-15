@@ -27,7 +27,6 @@ export const DeckDialog = ({
   onConfirm,
   ...dialogProps
 }: Props) => {
-  console.log(defaultValues.name)
   const [cover, setCover] = useState<File | null>(null)
   const [preview, setPreview] = useState<null | string>('')
 
