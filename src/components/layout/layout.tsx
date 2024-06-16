@@ -26,14 +26,11 @@ export const Layout = forwardRef<ElementRef<'div'>, Props>(
     })
     const profile = profileData(data)
 
-    //const profile = { avatar: '', email: 'email@gmail.com', name: 'vasya' }
-    //const isAuth = true
-
     return (
       <div ref={ref} {...rest}>
         <Header isAuth={isAuth} profile={profile} />
         <main className={classes}>
-          <Outlet />
+          <Outlet context={isAuth} />
         </main>
       </div>
     )

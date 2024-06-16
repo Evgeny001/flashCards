@@ -6,13 +6,9 @@ import { useLoginMutation } from '@/services/auth/auth.services'
 export const SignInPage = () => {
   const [login] = useLoginMutation()
   const navigate = useNavigate()
-  const handleSubmit = (data: FormValues) => {
-    try {
-      login(data).unwrap()
-      navigate('/')
-    } catch (e: any) {
-      // console.log(e.data.message)
-    }
+  const handleSubmit = async (data: FormValues) => {
+    await login(data).unwrap()
+    navigate('/')
   }
 
   return <SignIn onSubmit={handleSubmit} />

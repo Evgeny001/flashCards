@@ -7,6 +7,7 @@ import { DropDownItem, DropdownMenu, DropdownSeparator } from '@/components/ui/d
 import { DropdownItemWithIcon } from '@/components/ui/dropdown/dropdownItemWithIcon'
 import { ProfileData } from '@/components/ui/header/header'
 import { Typography } from '@/components/ui/typography'
+import { useLogoutMutation } from '@/services/auth/auth.services'
 
 import s from './headerDropDown.module.scss'
 
@@ -24,9 +25,7 @@ export const HeaderDropDown = ({ profileData }: Props) => {
     </div>
   )
 
-  const logout = () => {
-    console.log('logout')
-  }
+  const [logout] = useLogoutMutation()
 
   const navigate = useNavigate()
 
@@ -52,7 +51,7 @@ export const HeaderDropDown = ({ profileData }: Props) => {
       <DropdownSeparator />
       <DropdownItemWithIcon
         icon={<LogOut className={s.icon} />}
-        onSelect={logout}
+        onSelect={() => logout()}
         value={'Log Out'}
       />
     </DropdownMenu>
