@@ -6,6 +6,7 @@ import { DecksTable } from '@/components/decks/decks-table'
 import { DeleteDeckDialog } from '@/components/decks/deleteDeckDialog/deleteDeckDialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Loader } from '@/components/ui/loader'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { Tabs } from '@/components/ui/tabs'
@@ -23,7 +24,13 @@ import {
 import s from './decksPage.module.scss'
 
 export function DecksPage() {
-  const { data: minMaxData } = useGetMinMaxCardsQuery()
+  const { data: me } = useGetMeQuery()
+
+  const [showCreateNewDeckDialog, setShowCreateNewDeckDialog] = useState(false)
+  const [deckToDeleteId, setDeckToDeleteId] = useState<null | string>(null)
+  const [deckToEditId, setDeckToEditId] = useState<null | string>(null)
+
+  const showEditDeckDialog = !!deckToEditId
 
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -31,19 +38,17 @@ export function DecksPage() {
   const [maxSlider, setMaxSlider] = useState(50)
   const [itemsPerPage, setItemsPerPage] = useState(5)
   const [tabValue, setTabValue] = useState('All Cards')
-  const [deckToDeleteId, setDeckToDeleteId] = useState<null | string>(null)
-  const [deckToEditId, setDeckToEditId] = useState<null | string>(null)
-  const [showCreateNewDeckDialog, setShowCreateNewDeckDialog] = useState(false)
-
-  const showEditDeckDialog = !!deckToEditId
-
-  const { data: me } = useGetMeQuery()
 
   const currentUserId = me?.id
-
   const authorId = tabValue === 'My Cards' ? currentUserId : undefined
 
-  const { data, error, isError, isLoading } = useGetDecksQuery({
+  const {
+    currentData: decksCurrentData,
+    data: decksData,
+    error,
+    isError,
+    isLoading,
+  } = useGetDecksQuery({
     authorId,
     currentPage: currentPage,
     itemsPerPage: itemsPerPage,
@@ -52,12 +57,26 @@ export function DecksPage() {
     name: search,
   })
 
-  const deckToDeleteName = data?.items?.find(deck => deck.id === deckToDeleteId)?.name
-  const deckToEditName = data?.items?.find(deck => deck.id === deckToEditId)?.name
+  const clearFilter = () => {
+    setSearch('')
+    setTabValue('All Cards')
+    setMinSlider(minMaxData?.min ?? 0)
+    setMaxSlider(minMaxData?.max ?? 50)
+  }
+
+  const decks = decksCurrentData ?? decksData
+
+  const deckToDeleteName = decks?.items?.find(deck => deck.id === deckToDeleteId)?.name
+
+  const deckToEdit = decks?.items?.find(deck => deck.id === deckToEditId)
 
   const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
+
+  //////
+
+  const { data: minMaxData } = useGetMinMaxCardsQuery()
 
   useEffect(() => {
     if (minMaxData) {
@@ -65,26 +84,12 @@ export function DecksPage() {
     }
   }, [minMaxData])
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-  if (isError) {
-    return <div>{JSON.stringify(error)}</div>
-  }
-
   const handleDeleteClick = (id: string) => {
     setDeckToDeleteId(id)
   }
 
   const handleEditClick = (id: string) => {
     setDeckToEditId(id)
-  }
-
-  const clearFilter = () => {
-    setSearch('')
-    setTabValue('All Cards')
-    setMinSlider(minMaxData?.min ?? 0)
-    setMaxSlider(minMaxData?.max ?? 50)
   }
 
   const onCreateNewDeck = () => {
@@ -101,6 +106,13 @@ export function DecksPage() {
     createDeck(data)
   }
 
+  if (isLoading) {
+    return <Loader />
+  }
+  if (isError) {
+    return <div>{JSON.stringify(error)}</div>
+  }
+
   return (
     <PageContainer>
       <DeckDialog
@@ -113,11 +125,13 @@ export function DecksPage() {
       />
       <DeckDialog
         confirmText={'Confirm changes'}
+        defaultValues={deckToEdit}
+        key={deckToEditId}
         onCancel={() => setDeckToEditId(null)}
         onConfirm={onConfirmEditDeck}
         onOpenChange={() => setDeckToEditId(null)}
         open={showEditDeckDialog}
-        title={'Edit deck ' + deckToEditName}
+        title={'Edit deck ' + deckToEdit?.name}
       />
       <DeleteDeckDialog
         deckName={deckToDeleteName ?? 'Selected deck'}
@@ -164,7 +178,7 @@ export function DecksPage() {
       <div>
         <DecksTable
           currentUserId={currentUserId ?? ''}
-          decks={data?.items}
+          decks={decks?.items}
           onDeleteClick={handleDeleteClick}
           onEditClick={handleEditClick}
         />
@@ -177,7 +191,7 @@ export function DecksPage() {
           onChangePage={setCurrentPage}
           onPerPageChange={value => setItemsPerPage(+value)}
           perPageOptions={['5', '10', '20', '50']}
-          totalCount={data?.pagination.totalPages ?? 0}
+          totalCount={decks?.pagination.totalPages ?? 0}
         />
       </div>
     </PageContainer>

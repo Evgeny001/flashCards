@@ -7,6 +7,7 @@ import { DropDownItem, DropdownMenu, DropdownSeparator } from '@/components/ui/d
 import { DropdownItemWithIcon } from '@/components/ui/dropdown/dropdownItemWithIcon'
 import { ProfileData } from '@/components/ui/header/header'
 import { Typography } from '@/components/ui/typography'
+import { useLogoutMutation } from '@/services/auth/auth.services'
 
 import s from './headerDropDown.module.scss'
 
@@ -15,11 +16,16 @@ type Props = {
 }
 
 export const HeaderDropDown = ({ profileData }: Props) => {
-  const trigger = <Avatar name={'Leonid'} variant={'small'} />
+  const trigger = (
+    <div className={s.wrapper}>
+      <Typography className={s.profileName} variant={'subtitle1'}>
+        {profileData.name}
+      </Typography>
+      <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />
+    </div>
+  )
 
-  const logout = () => {
-    console.log('logout')
-  }
+  const [logout] = useLogoutMutation()
 
   const navigate = useNavigate()
 
@@ -28,28 +34,26 @@ export const HeaderDropDown = ({ profileData }: Props) => {
   }
 
   return (
-    <div>
-      <DropdownMenu trigger={trigger}>
-        <DropDownItem className={s.avatar}>
-          <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />
-          <div className={s.info}>
-            <Typography variant={'subtitle1'}>{profileData.name}</Typography>
-            <Typography variant={'caption'}>{profileData.email}</Typography>
-          </div>
-        </DropDownItem>
-        <DropdownSeparator />
-        <DropdownItemWithIcon
-          icon={<PersonOutline className={s.icon} />}
-          onSelect={toProfile}
-          value={'My Profile'}
-        />
-        <DropdownSeparator />
-        <DropdownItemWithIcon
-          icon={<LogOut className={s.icon} />}
-          onSelect={logout}
-          value={'Log Out'}
-        />
-      </DropdownMenu>
-    </div>
+    <DropdownMenu trigger={trigger}>
+      <DropDownItem className={s.avatar}>
+        <Avatar name={profileData.name} src={profileData.avatar} variant={'small'} />
+        <div className={s.info}>
+          <Typography variant={'subtitle1'}>{profileData.name}</Typography>
+          <Typography variant={'caption'}>{profileData.email}</Typography>
+        </div>
+      </DropDownItem>
+      <DropdownSeparator />
+      <DropdownItemWithIcon
+        icon={<PersonOutline className={s.icon} />}
+        onSelect={toProfile}
+        value={'My Profile'}
+      />
+      <DropdownSeparator />
+      <DropdownItemWithIcon
+        icon={<LogOut className={s.icon} />}
+        onSelect={() => logout()}
+        value={'Log Out'}
+      />
+    </DropdownMenu>
   )
 }

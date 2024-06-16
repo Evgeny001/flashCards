@@ -38,7 +38,7 @@ export interface GetDecksArgs {
 }
 
 export type CreateDeckArgs = {
-  cover?: string
+  cover?: File | null
   isPrivate?: boolean
   name: string
 }
@@ -48,7 +48,7 @@ export type DeleteDeckArgs = {
 }
 
 export type updateDecksArgs = {
-  cover?: string
+  cover?: File | null
   id: string
   isPrivate?: boolean
   name?: string
