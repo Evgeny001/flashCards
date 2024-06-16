@@ -6,6 +6,7 @@ import { DecksTable } from '@/components/decks/decks-table'
 import { DeleteDeckDialog } from '@/components/decks/deleteDeckDialog/deleteDeckDialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Loader } from '@/components/ui/loader'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { Tabs } from '@/components/ui/tabs'
@@ -106,7 +107,7 @@ export function DecksPage() {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loader />
   }
   if (isError) {
     return <div>{JSON.stringify(error)}</div>

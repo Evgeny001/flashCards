@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 
 import { Layout } from '@/components/layout/layout'
+import { Loader } from '@/components/ui/loader'
 import { DecksPage } from '@/pages/decks/decksPage'
 import { LearnPage } from '@/pages/learnPage/learnPage'
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
@@ -57,7 +58,7 @@ export function Router() {
 
   // console.log(isMeLoading + ' - загрузка')
   if (isMeLoading) {
-    return <div style={{ fontSize: '50px', margin: '50px' }}>Preloader</div>
+    return <Loader />
   }
 
   return <RouterProvider router={router} />
