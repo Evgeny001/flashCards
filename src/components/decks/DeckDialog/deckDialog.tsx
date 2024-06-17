@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { ImageOutline } from '@/assets/icons/ImageOutline'
+import { TrashOutline } from '@/assets/icons/TrashOutline'
 import defaultImage from '@/assets/images/default-image.jpg'
 import { Button } from '@/components/ui/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
@@ -72,7 +74,6 @@ export const DeckDialog = ({
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
 
-      console.log('file: ', file)
       setCover(file)
     }
   }
@@ -86,14 +87,14 @@ export const DeckDialog = ({
         <img alt={''} className={s.preview} src={preview ? preview : defaultImage} />
         <input
           accept={'image/*'}
-          className={s.hiddenInput}
           onChange={uploadHandler}
           ref={originalInput}
+          style={{ display: 'none' }}
           type={'file'}
         />
         <div className={s.buttonsWrapper}>
           <Button fullWidth onClick={onClickChoiceImage} variant={'primary'}>
-            {preview ? 'Change cover' : 'Add cover'}
+            <ImageOutline /> {preview ? 'Change cover' : 'Add cover'}
           </Button>
           {preview && (
             <Button
@@ -104,7 +105,7 @@ export const DeckDialog = ({
               }}
               variant={'primary'}
             >
-              Remove cover
+              <TrashOutline /> Remove cover
             </Button>
           )}
         </div>
