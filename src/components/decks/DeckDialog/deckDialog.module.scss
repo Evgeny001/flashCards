@@ -6,3 +6,25 @@
   width: 100%;
   padding: 24px;
 }
+
+.buttonsWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.hiddenInput {
+  position: absolute;
+  z-index: -1;
+  overflow: hidden;
+
+  //width: 0;
+  //height: 0;
+  //
+  //opacity: 0;
+}
+
+.preview {
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
+}
