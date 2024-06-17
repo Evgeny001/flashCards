@@ -51,11 +51,27 @@ export const decksService = baseApi.injectEndpoints({
             console.log(e)
           }
         },
-        query: args => ({
-          body: args,
-          method: 'POST',
-          url: 'v1/decks',
-        }),
+        query: body => {
+          const { cover, isPrivate, name } = body
+
+          const formData = new FormData()
+
+          formData.append('name', name)
+
+          if (isPrivate) {
+            formData.append('isPrivate', isPrivate.toString())
+          }
+
+          if (cover) {
+            formData.append('cover', cover)
+          }
+
+          return {
+            body: formData,
+            method: 'POST',
+            url: `v1/decks`,
+          }
+        },
       }),
       deleteDeck: builder.mutation<Deck, DeleteDeckArgs>({
         invalidatesTags: ['Decks'],
@@ -110,11 +126,27 @@ export const decksService = baseApi.injectEndpoints({
             })
           }
         },
-        query: ({ id, ...args }) => ({
-          body: args,
-          method: 'PATCH',
-          url: `v1/decks/${id}`,
-        }),
+        query: ({ cover, id, isPrivate, name }) => {
+          const formData = new FormData()
+
+          if (name) {
+            formData.append('name', name)
+          }
+          if (isPrivate) {
+            formData.append('isPrivate', isPrivate.toString())
+          }
+          if (cover) {
+            formData.append('cover', cover)
+          } else if (cover === null) {
+            formData.append('cover', '')
+          }
+
+          return {
+            body: formData,
+            method: 'PATCH',
+            url: `v1/decks/${id}`,
+          }
+        },
       }),
     }
   },
