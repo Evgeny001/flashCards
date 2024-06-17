@@ -1,9 +1,10 @@
-import loader from '@/assets/images/loader.gif'
+import s from './loader.module.scss'
 
-export const Loader = (props: { className?: string }) => {
+export const Loader = () => {
   return (
-    <div style={{ left: 'calc(50% - 50px)', position: 'fixed', top: '40%' }}>
-      <img alt={'loader'} src={loader} {...props} width={100} />
-    </div>
+    <div
+      className={s.loader}
+      style={{ left: 'calc(50% - 50px)', position: 'fixed', top: '30%' }}
+    ></div>
   )
 }
