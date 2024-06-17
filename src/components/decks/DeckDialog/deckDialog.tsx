@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import defaultImage from '@/assets/images/default-image.jpg'
 import { Button } from '@/components/ui/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
 import { ControlledInput } from '@/components/ui/controlled/controlled-input'
@@ -67,25 +68,46 @@ export const DeckDialog = ({
     onCancel?.()
   }
 
+  const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      console.log('file: ', file)
+      setCover(file)
+    }
+  }
+
+  const originalInput = useRef<HTMLInputElement | null>(null)
+  const onClickChoiceImage = () => originalInput?.current?.click()
+
   return (
     <Dialog {...dialogProps} onCancel={handleCancel} onConfirm={onSubmit}>
       <form className={s.content} onSubmit={onSubmit}>
-        {preview && <img alt={''} src={preview} />}
+        <img alt={''} className={s.preview} src={preview ? preview : defaultImage} />
         <input
           accept={'image/*'}
-          onChange={e => setCover(e.target.files?.[0] ?? null)}
+          className={s.hiddenInput}
+          onChange={uploadHandler}
+          ref={originalInput}
           type={'file'}
         />
-        {cover && (
-          <Button
-            onClick={() => {
-              setCover(null)
-              setPreview(null)
-            }}
-          >
-            Remove cover
+        <div className={s.buttonsWrapper}>
+          <Button fullWidth onClick={onClickChoiceImage} variant={'primary'}>
+            {preview ? 'Change cover' : 'Add cover'}
           </Button>
-        )}
+          {preview && (
+            <Button
+              fullWidth
+              onClick={() => {
+                setCover(null)
+                setPreview(null)
+              }}
+              variant={'primary'}
+            >
+              Remove cover
+            </Button>
+          )}
+        </div>
         <ControlledInput control={control} label={'Deck name'} name={'name'} />
         <ControlledCheckbox control={control} label={'Private'} name={'isPrivate'} />
       </form>
