@@ -34,6 +34,44 @@ export const authService = baseApi.injectEndpoints({
         url: '/v1/auth/logout',
       }),
     }),
+    updateProfile: builder.mutation<UserResponce, any>({
+      invalidatesTags: (_, error) => (error ? [] : ['Me']),
+      // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      //   const updateResult = dispatch(
+      //     authService.util.updateQueryData('getMe', undefined, draft => {
+      //       const name = arg.get('name')
+      //       const avatar = arg.get('avatar')
+      //
+      //       if (avatar instanceof File) {
+      //         draft.avatar = URL.createObjectURL(avatar)
+      //       }
+      //       if (typeof name === 'string') {
+      //         draft.name = name
+      //       }
+      //     })
+      //   )
+      //
+      //   try {
+      //     await queryFulfilled
+      //   } catch {
+      //     updateResult.undo()
+      //   }
+      // },
+      query: body => {
+        const { avatar, name } = body
+
+        const formData = new FormData()
+
+        if (avatar) {
+          formData.append('avatar', avatar)
+        }
+        if (name) {
+          formData.append('name', name)
+        }
+
+        return { body: formData, method: 'PATCH', url: '/v1/auth/me' }
+      },
+    }),
     // logout: builder.mutation<LogoutResponse, void>({
     //   async onQueryStarted(_, { dispatch, queryFulfilled }) {
     //     const { data } = await queryFulfilled
@@ -55,4 +93,5 @@ export const authService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetMeQuery, useLoginMutation, useLogoutMutation } = authService
+export const { useGetMeQuery, useLoginMutation, useLogoutMutation, useUpdateProfileMutation } =
+  authService

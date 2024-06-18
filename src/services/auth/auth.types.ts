@@ -18,3 +18,8 @@ export type LoginArgs = {
   password: string
   rememberMe?: boolean
 }
+
+export type UpdateProfileArgs = {
+  avatar?: File | null
+  name?: string
+}
