@@ -12,6 +12,7 @@ import { Loader } from '@/components/ui/loader'
 import { DecksPage } from '@/pages/decks/decksPage'
 import { LearnPage } from '@/pages/learnPage/learnPage'
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
+import { ProfilePage } from '@/pages/profilePage/profilePage'
 import { SignInPage } from '@/pages/signInPage/signInPage'
 import { useGetMeQuery } from '@/services/auth/auth.services'
 
@@ -35,6 +36,10 @@ const privateRoutes: RouteObject[] = [
     element: <LearnPage />,
     path: '/decks/:deckId/learn',
   },
+  {
+    element: <ProfilePage />,
+    path: '/profile',
+  },
 ]
 
 export const router = createBrowserRouter([
@@ -56,7 +61,6 @@ export const router = createBrowserRouter([
 export function Router() {
   const { isLoading: isMeLoading } = useGetMeQuery()
 
-  // console.log(isMeLoading + ' - загрузка')
   if (isMeLoading) {
     return <Loader />
   }
