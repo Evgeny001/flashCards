@@ -10,6 +10,7 @@ import {
 import { Layout } from '@/components/layout/layout'
 import { Loader } from '@/components/ui/loader'
 import { CheckEmailPage } from '@/pages/checkEmailPage/checkEmailPage'
+import { CreateNewPasswordPage } from '@/pages/createNewPasswordPage/createNewPasswordPage'
 import { DecksPage } from '@/pages/decks/decksPage'
 import { LearnPage } from '@/pages/learnPage/learnPage'
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
@@ -30,6 +31,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <CheckEmailPage />,
     path: '/check-email',
+  },
+  {
+    element: <CreateNewPasswordPage />,
+    path: '/create-new-password/:token',
   },
 ]
 

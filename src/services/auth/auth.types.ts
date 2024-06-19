@@ -29,3 +29,8 @@ export type RecoverPasswordArgs = {
   html: string
   subject?: string
 }
+
+export type CreateNewPasswordArgs = {
+  password: string
+  token: string
+}

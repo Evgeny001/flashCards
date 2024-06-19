@@ -10,7 +10,7 @@ export const RecoverPasswordPage = () => {
   const onSubmit = async (data: RecoverPasswordFormValues) => {
     recoverPassword({
       email: data.email,
-      html: `<h1>Hi, ##name##</h1><p>Click <a href="https://flash-cards-wine.vercel.app/recover-password/##token##">here</a> to recover your password</p>`,
+      html: `<h1>Hi, ##name##</h1><p>Click <a href="https://flash-cards-wine.vercel.app/create-new-password/##token##">here</a> to recover your password</p>`,
       subject: 'recover-password flashcards',
     })
     navigate('/check-email', { state: { email: data.email } })

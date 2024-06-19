@@ -1,4 +1,5 @@
 import {
+  CreateNewPasswordArgs,
   LoginArgs,
   LoginResponse,
   RecoverPasswordArgs,
@@ -8,6 +9,13 @@ import { baseApi } from '@/services/base-api'
 
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
+    createNewPassword: builder.mutation<void, CreateNewPasswordArgs>({
+      query: ({ token, ...args }) => ({
+        body: args,
+        method: 'POST',
+        url: `/v1/auth/reset-password/${token}`,
+      }),
+    }),
     getMe: builder.query<UserResponce | undefined, void>({
       providesTags: ['Me'],
       query: () => ({
@@ -46,7 +54,6 @@ export const authService = baseApi.injectEndpoints({
         url: '/v1/auth/recover-password',
       }),
     }),
-
     updateProfile: builder.mutation<UserResponce, any>({
       invalidatesTags: (_, error) => (error ? [] : ['Me']),
       // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -107,6 +114,7 @@ export const authService = baseApi.injectEndpoints({
 })
 
 export const {
+  useCreateNewPasswordMutation,
   useGetMeQuery,
   useLoginMutation,
   useLogoutMutation,
