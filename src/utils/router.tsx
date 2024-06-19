@@ -9,6 +9,7 @@ import {
 
 import { Layout } from '@/components/layout/layout'
 import { Loader } from '@/components/ui/loader'
+import { CheckEmailPage } from '@/pages/checkEmailPage/checkEmailPage'
 import { DecksPage } from '@/pages/decks/decksPage'
 import { LearnPage } from '@/pages/learnPage/learnPage'
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
@@ -25,6 +26,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <RecoverPasswordPage />,
     path: '/recover-password',
+  },
+  {
+    element: <CheckEmailPage />,
+    path: '/check-email',
   },
 ]
 

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { CheckEmailIcon } from '@/assets/icons/CheckEmailIcon'
 import { Button } from '@/components/ui/button'
@@ -7,11 +7,13 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './checkEmail.module.scss'
 
-type Props = {
-  email: string
-}
+// type Props = {
+//   email: string
+// }
 
-export const CheckEmail = ({ email }: Props) => {
+export const CheckEmail = () => {
+  const { state } = useLocation()
+
   return (
     <Card className={s.card}>
       <div className={s.content}>
@@ -20,7 +22,7 @@ export const CheckEmail = ({ email }: Props) => {
           <CheckEmailIcon />
         </div>
         <Typography className={s.description} variant={'body2'}>
-          We’ve sent an Email with instructions to {email}
+          We’ve sent an Email with instructions to {state ? state.email : 'example@test.com'}
         </Typography>
         <Button as={Link} fullWidth to={'/login'} variant={'primary'}>
           Back to Sign In
