@@ -7,22 +7,23 @@ import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './forgotPassword.module.scss'
+import s from './recoverPassword.module.scss'
 
 type Props = {
-  onSubmit: (data: FormValues) => void
+  onSubmit: (data: RecoverPasswordFormValues) => void
 }
-export type FormValues = z.infer<typeof schema>
 const schema = z.object({
   email: z.string().email().min(1, { message: 'email is required' }),
 })
 
-export const ForgotPassword = ({ onSubmit }: Props) => {
+export type RecoverPasswordFormValues = z.infer<typeof schema>
+
+export const RecoverPassword = ({ onSubmit }: Props) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormValues>({
+  } = useForm<RecoverPasswordFormValues>({
     defaultValues: {
       email: '',
     },

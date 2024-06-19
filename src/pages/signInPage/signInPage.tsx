@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { FormValues, SignIn } from '@/components/auth/signIn'
+import { PageContainer } from '@/pages/pageContainer/pageContainer'
 import { useLoginMutation } from '@/services/auth/auth.services'
 
 export const SignInPage = () => {
@@ -11,5 +12,9 @@ export const SignInPage = () => {
     navigate('/')
   }
 
-  return <SignIn onSubmit={handleSubmit} />
+  return (
+    <PageContainer mt={'36px'}>
+      <SignIn onSubmit={handleSubmit} />
+    </PageContainer>
+  )
 }

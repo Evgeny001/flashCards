@@ -13,6 +13,7 @@ import { DecksPage } from '@/pages/decks/decksPage'
 import { LearnPage } from '@/pages/learnPage/learnPage'
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
 import { ProfilePage } from '@/pages/profilePage/profilePage'
+import { RecoverPasswordPage } from '@/pages/recoverPasswordPage/recoverPasswordPage'
 import { SignInPage } from '@/pages/signInPage/signInPage'
 import { useGetMeQuery } from '@/services/auth/auth.services'
 
@@ -20,6 +21,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <SignInPage />,
     path: '/login',
+  },
+  {
+    element: <RecoverPasswordPage />,
+    path: '/recover-password',
   },
 ]
 

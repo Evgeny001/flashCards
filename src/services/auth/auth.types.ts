@@ -23,3 +23,9 @@ export type UpdateProfileArgs = {
   avatar?: File | null
   name?: string
 }
+
+export type RecoverPasswordArgs = {
+  email: string
+  html: string
+  subject?: string
+}
