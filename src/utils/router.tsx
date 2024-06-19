@@ -9,10 +9,13 @@ import {
 
 import { Layout } from '@/components/layout/layout'
 import { Loader } from '@/components/ui/loader'
+import { CheckEmailPage } from '@/pages/checkEmailPage/checkEmailPage'
+import { CreateNewPasswordPage } from '@/pages/createNewPasswordPage/createNewPasswordPage'
 import { DecksPage } from '@/pages/decks/decksPage'
 import { LearnPage } from '@/pages/learnPage/learnPage'
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
 import { ProfilePage } from '@/pages/profilePage/profilePage'
+import { RecoverPasswordPage } from '@/pages/recoverPasswordPage/recoverPasswordPage'
 import { SignInPage } from '@/pages/signInPage/signInPage'
 import { useGetMeQuery } from '@/services/auth/auth.services'
 
@@ -20,6 +23,18 @@ const publicRoutes: RouteObject[] = [
   {
     element: <SignInPage />,
     path: '/login',
+  },
+  {
+    element: <RecoverPasswordPage />,
+    path: '/recover-password',
+  },
+  {
+    element: <CheckEmailPage />,
+    path: '/check-email',
+  },
+  {
+    element: <CreateNewPasswordPage />,
+    path: '/create-new-password/:token',
   },
 ]
 

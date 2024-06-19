@@ -23,3 +23,14 @@ export type UpdateProfileArgs = {
   avatar?: File | null
   name?: string
 }
+
+export type RecoverPasswordArgs = {
+  email: string
+  html: string
+  subject?: string
+}
+
+export type CreateNewPasswordArgs = {
+  password: string
+  token: string
+}

@@ -59,7 +59,12 @@ export const SignIn = ({ onSubmit }: SignInProps) => {
           name={'rememberMe'}
         />
         <div>
-          <Typography as={'a'} className={s.forgotPassword} variant={'body2'}>
+          <Typography
+            as={Link}
+            className={s.forgotPassword}
+            to={'/recover-password'}
+            variant={'body2'}
+          >
             Forgot Password?
           </Typography>
         </div>

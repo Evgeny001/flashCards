@@ -1,8 +1,21 @@
-import { LoginArgs, LoginResponse, UserResponce } from '@/services/auth/auth.types'
+import {
+  CreateNewPasswordArgs,
+  LoginArgs,
+  LoginResponse,
+  RecoverPasswordArgs,
+  UserResponce,
+} from '@/services/auth/auth.types'
 import { baseApi } from '@/services/base-api'
 
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
+    createNewPassword: builder.mutation<void, CreateNewPasswordArgs>({
+      query: ({ token, ...args }) => ({
+        body: args,
+        method: 'POST',
+        url: `/v1/auth/reset-password/${token}`,
+      }),
+    }),
     getMe: builder.query<UserResponce | undefined, void>({
       providesTags: ['Me'],
       query: () => ({
@@ -32,6 +45,13 @@ export const authService = baseApi.injectEndpoints({
       query: () => ({
         method: 'POST',
         url: '/v1/auth/logout',
+      }),
+    }),
+    recoverPassword: builder.mutation<void, RecoverPasswordArgs>({
+      query: args => ({
+        body: args,
+        method: 'POST',
+        url: '/v1/auth/recover-password',
       }),
     }),
     updateProfile: builder.mutation<UserResponce, any>({
@@ -93,5 +113,11 @@ export const authService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetMeQuery, useLoginMutation, useLogoutMutation, useUpdateProfileMutation } =
-  authService
+export const {
+  useCreateNewPasswordMutation,
+  useGetMeQuery,
+  useLoginMutation,
+  useLogoutMutation,
+  useRecoverPasswordMutation,
+  useUpdateProfileMutation,
+} = authService

@@ -1,15 +1,18 @@
 import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card/card'
 import { ControlledInput } from '@/components/ui/controlled/controlled-input'
 import { Typography } from '@/components/ui/typography'
+import { CreateNewPasswordArgs } from '@/services/auth/auth.types'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './createNewPassword.module.scss'
 
 type Props = {
-  onSubmit: (data: FormValues) => void
+  onSubmit: (data: CreateNewPasswordArgs) => void
 }
 
 type FormValues = z.infer<typeof schema>
@@ -19,6 +22,8 @@ const schema = z.object({
 })
 
 export const CreateNewPassword = (props: Props) => {
+  const { token } = useParams<{ token: string }>()
+
   const {
     control,
     formState: { errors },
@@ -27,7 +32,14 @@ export const CreateNewPassword = (props: Props) => {
     defaultValues: {
       password: '',
     },
+    resolver: zodResolver(schema),
   })
+
+  const onSubmitFormValues = (data: FormValues) => {
+    if (token) {
+      props.onSubmit({ ...data, token })
+    }
+  }
 
   return (
     <Card className={s.card}>
@@ -35,7 +47,7 @@ export const CreateNewPassword = (props: Props) => {
         <Typography className={s.cardTitle} variant={'h1'}>
           Create new password
         </Typography>
-        <form onSubmit={handleSubmit(props.onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmitFormValues)}>
           <ControlledInput
             control={control}
             errorMessage={errors.password?.message}
