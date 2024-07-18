@@ -18,6 +18,7 @@ import { ProfilePage } from '@/pages/profilePage/profilePage'
 import { RecoverPasswordPage } from '@/pages/recoverPasswordPage/recoverPasswordPage'
 import { SignInPage } from '@/pages/signInPage/signInPage'
 import { useGetMeQuery } from '@/services/auth/auth.services'
+import { SignUpPage } from '@/pages/signUpPage/signUpPage'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -35,6 +36,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <CreateNewPasswordPage />,
     path: '/create-new-password/:token',
+  },
+  {
+    element: <SignUpPage />,
+    path: '/sign-up',
   },
 ]
 

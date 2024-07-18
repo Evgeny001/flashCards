@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './sign-up-form.module.scss'
+import { Link } from 'react-router-dom'
 
 export type FormValues = {
   email: string
@@ -30,8 +31,11 @@ const validationSchema = z
     message: "Passwords don't match",
     path: ['passConfirm'],
   })
-
-export const SignUpForm = () => {
+// export type FormValues = z.infer<typeof validationSchema>
+export type SignUpProps = {
+  onSubmit: (data: FormValues) => void
+}
+export const SignUpForm = ({ onSubmit }: SignUpProps) => {
   const {
     control,
     formState: { errors },
@@ -41,9 +45,9 @@ export const SignUpForm = () => {
     defaultValues: user,
     resolver: zodResolver(validationSchema),
   })
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
-  }
+  // const onSubmit = (data: FormValues) => {
+  //   console.log(data)
+  // }
 
   return (
     <>
@@ -82,7 +86,7 @@ export const SignUpForm = () => {
               Sign Up
             </Button>
             <Typography className={s.caption}>Already have an account?</Typography>
-            <Typography as={'a'} className={s.signInLink} variant={'link1'}>
+            <Typography as={Link} className={s.signInLink} to={'/login'} variant={'link1'}>
               Sign In
             </Typography>
           </div>
