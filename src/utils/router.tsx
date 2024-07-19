@@ -17,8 +17,8 @@ import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
 import { ProfilePage } from '@/pages/profilePage/profilePage'
 import { RecoverPasswordPage } from '@/pages/recoverPasswordPage/recoverPasswordPage'
 import { SignInPage } from '@/pages/signInPage/signInPage'
-import { useGetMeQuery } from '@/services/auth/auth.services'
 import { SignUpPage } from '@/pages/signUpPage/signUpPage'
+import { useGetMeQuery } from '@/services/auth/auth.services'
 
 const publicRoutes: RouteObject[] = [
   {

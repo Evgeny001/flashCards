@@ -31,6 +31,7 @@ const validationSchema = z
     message: "Passwords don't match",
     path: ['passwordConfirm'],
   })
+
 // export type FormValues = z.infer<typeof validationSchema>
 export type SignUpProps = {
   onSubmit: (data: SignUpFormValues) => void

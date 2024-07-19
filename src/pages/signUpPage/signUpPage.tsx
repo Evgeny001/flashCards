@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom'
+
 import { SignUpForm, SignUpFormValues } from '@/components/auth/sign-up-form'
+import { FormValues } from '@/components/auth/signIn'
 import { PageContainer } from '@/pages/pageContainer/pageContainer'
 import { useLoginMutation, useSignUpMutation } from '@/services/auth/auth.services'
-import { FormValues } from '@/components/auth/signIn'
-import { useNavigate } from 'react-router-dom'
 
 export const SignUpPage = () => {
   const [signUp] = useSignUpMutation()
