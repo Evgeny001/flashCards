@@ -11,29 +11,29 @@ import { z } from 'zod'
 import s from './sign-up-form.module.scss'
 import { Link } from 'react-router-dom'
 
-export type FormValues = {
+export type SignUpFormValues = {
   email: string
-  pass: string
-  passConfirm: string
+  password: string
+  passwordConfirm: string
 }
-const user: FormValues = {
+const user: SignUpFormValues = {
   email: '',
-  pass: '',
-  passConfirm: '',
+  password: '',
+  passwordConfirm: '',
 }
 const validationSchema = z
   .object({
     email: z.string().email().min(1, { message: 'email is required' }),
-    pass: z.string().min(1, { message: 'password is required' }),
-    passConfirm: z.string().min(1, { message: 'password is required' }),
+    password: z.string().min(1, { message: 'password is required' }),
+    passwordConfirm: z.string().min(1, { message: 'password is required' }),
   })
-  .refine(data => data.pass === data.passConfirm, {
+  .refine(data => data.password === data.passwordConfirm, {
     message: "Passwords don't match",
-    path: ['passConfirm'],
+    path: ['passwordConfirm'],
   })
 // export type FormValues = z.infer<typeof validationSchema>
 export type SignUpProps = {
-  onSubmit: (data: FormValues) => void
+  onSubmit: (data: SignUpFormValues) => void
 }
 export const SignUpForm = ({ onSubmit }: SignUpProps) => {
   const {
@@ -41,7 +41,7 @@ export const SignUpForm = ({ onSubmit }: SignUpProps) => {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<FormValues>({
+  } = useForm<SignUpFormValues>({
     defaultValues: user,
     resolver: zodResolver(validationSchema),
   })
@@ -67,17 +67,17 @@ export const SignUpForm = ({ onSubmit }: SignUpProps) => {
               type={'text'}
             />
             <Input
-              {...register('pass')}
+              {...register('password')}
               className={s.inputs}
-              errorMessage={errors.pass?.message}
+              errorMessage={errors.password?.message}
               label={'Password'}
               placeholder={'your password'}
               type={'password'}
             />
             <Input
-              {...register('passConfirm')}
+              {...register('passwordConfirm')}
               className={s.inputs}
-              errorMessage={errors?.passConfirm?.message}
+              errorMessage={errors?.passwordConfirm?.message}
               label={'Confirm Password'}
               placeholder={'confirm your password'}
               type={'password'}

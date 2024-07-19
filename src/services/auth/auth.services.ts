@@ -3,6 +3,8 @@ import {
   LoginArgs,
   LoginResponse,
   RecoverPasswordArgs,
+  SingUpArgs,
+  SingUpResponse,
   UserResponce,
 } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/base-api'
@@ -110,6 +112,13 @@ export const authService = baseApi.injectEndpoints({
     //   },
     //   query: () => ({ method: 'POST', url: 'v2/auth/logout' }),
     // }),
+    signUp: builder.mutation<SingUpResponse, SingUpArgs>({
+      query: body => ({
+        body: body,
+        method: 'POST',
+        url: `/v1/auth/sign-up`,
+      }),
+    }),
   }),
 })
 
@@ -120,4 +129,5 @@ export const {
   useLogoutMutation,
   useRecoverPasswordMutation,
   useUpdateProfileMutation,
+  useSignUpMutation,
 } = authService
