@@ -34,3 +34,21 @@ export type CreateNewPasswordArgs = {
   password: string
   token: string
 }
+export type SingUpArgs = {
+  email: string
+  html?: string
+  name?: string
+  password: string
+  sendConfirmationEmail?: boolean
+  subject?: string
+}
+
+export type SingUpResponse = {
+  avatar: string
+  created: string
+  email: string
+  id: string
+  isEmailVerified: boolean
+  name: string
+  updated: string
+}
