@@ -52,3 +52,8 @@ export type SingUpResponse = {
   name: string
   updated: string
 }
+export type SignUpErrorResponse = {
+  data: {
+    errorMessages: string[]
+  }
+}
