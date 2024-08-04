@@ -88,9 +88,9 @@
   width: 100%;
 }
 
-a {
-  text-decoration: none;
-}
+// a {
+//  text-decoration: none;
+// }
 
 .icon {
   background-color: black;
@@ -102,5 +102,31 @@ a {
         fill: var(--color-accent-300);
       }
     }
+  }
+}
+
+.link {
+  padding: 6px 0;
+
+  font-size: var(--font-size-m);
+  color: var(--color-accent-500);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+
+  &:hover {
+    color: var(--color-accent-300);
+  }
+
+  &:active {
+    color: var(--color-accent-700);
+  }
+
+  &:focus-visible {
+    color: var(--color-accent-500);
+    border-radius: 130px;
+  }
+
+  &:disabled {
+    color: var(--color-accent-900);
   }
 }
