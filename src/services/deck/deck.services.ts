@@ -1,5 +1,5 @@
 import { baseApi } from '@/services/base-api'
-import { DeckResponse } from '@/services/deck/deck.types'
+import { CardType, DeckResponse } from '@/services/deck/deck.types'
 
 export const decksService = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -7,8 +7,14 @@ export const decksService = baseApi.injectEndpoints({
       getDeckById: builder.query<DeckResponse, { id: string }>({
         query: ({ id }) => `v1/decks/${id}`,
       }),
+      getRandomCard: builder.query<CardType, { id: string }>({
+        providesTags: ['Deck'],
+        query: ({ id }) => ({
+          url: `/v1/decks/${id}/learn`,
+        }),
+      }),
     }
   },
 })
 
-export const { useGetDeckByIdQuery } = decksService
+export const { useGetDeckByIdQuery, useGetRandomCardQuery } = decksService

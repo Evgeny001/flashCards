@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { RadioItem } from '@/components/ui/radioGroup/radioItem/radioItem'
 import * as Radio from '@radix-ui/react-radio-group'
+import { clsx } from 'clsx'
 
 import s from './radioGroup.module.scss'
 export type Option = {
@@ -15,9 +16,9 @@ export type RadioGroupProps = {
   options: Option[]
 } & ComponentPropsWithoutRef<typeof Radio.Root>
 export const RadioGroup = forwardRef<ElementRef<typeof Radio.Root>, RadioGroupProps>(
-  ({ name, options, ...restProps }, ref) => {
+  ({ className, name, options, ...restProps }, ref) => {
     const classNames = {
-      box: s.box,
+      box: clsx(className, s.box),
     }
 
     return (

@@ -12,7 +12,7 @@ import { Loader } from '@/components/ui/loader'
 import { CheckEmailPage } from '@/pages/checkEmailPage/checkEmailPage'
 import { CreateNewPasswordPage } from '@/pages/createNewPasswordPage/createNewPasswordPage'
 import { DecksPage } from '@/pages/decks/decksPage'
-import { LearnPage } from '@/pages/learnPage/learnPage'
+import { LearnCardPage } from '@/pages/learnCardPage/learnCardPage'
 import { PageNotFound } from '@/pages/pageNotFound/pageNotFound'
 import { ProfilePage } from '@/pages/profilePage/profilePage'
 import { RecoverPasswordPage } from '@/pages/recoverPasswordPage/recoverPasswordPage'
@@ -53,7 +53,7 @@ const privateRoutes: RouteObject[] = [
   //   path: '/decks/:deckId',
   // },
   {
-    element: <LearnPage />,
+    element: <LearnCardPage />,
     path: '/decks/:deckId/learn',
   },
   {
