@@ -69,28 +69,23 @@ export const DecksTable = ({
 
   return (
     <Table>
-      {/*<TableHead>*/}
-      {/*  <TableRow>*/}
-      {/*    <TableHeadCell>Name</TableHeadCell>*/}
-      {/*    <TableHeadCell>Cards</TableHeadCell>*/}
-      {/*    <TableHeadCell>Last Updated</TableHeadCell>*/}
-      {/*    <TableHeadCell>Author</TableHeadCell>*/}
-      {/*    <TableHeadCell>Actions</TableHeadCell>*/}
-      {/*  </TableRow>*/}
-      {/*</TableHead>*/}
       <TableHeader columns={columns} onSort={onSort} sort={sort}></TableHeader>
       <TableBody>
         {decks?.map(deck => (
           <TableRow key={deck.id}>
             <TableCell className={s.name}>
-              {deck.cover ? (
-                <img alt={"deck's image"} className={s.img} src={deck.cover} />
-              ) : (
-                <img alt={'no image'} className={s.img} src={defaultImage} />
-              )}
-              <Typography as={Link} to={`/decks/${deck.id}`} variant={'body2'}>
-                {deck.name}
-              </Typography>
+              <div className={s.nameWrapper}>
+                <div className={s.imgWrapper}>
+                  {deck.cover ? (
+                    <img alt={"deck's image"} className={s.img} src={deck.cover} />
+                  ) : (
+                    <img alt={'no image'} className={s.img} src={defaultImage} />
+                  )}
+                </div>
+                <Typography as={Link} to={`/decks/${deck.id}`} variant={'body2'}>
+                  {deck.name}
+                </Typography>
+              </div>
             </TableCell>
             <TableCell>{deck.cardsCount}</TableCell>
             <TableCell>{new Date(deck.updated).toLocaleString('ru-ru')}</TableCell>
@@ -105,6 +100,7 @@ export const DecksTable = ({
                 <Button
                   as={Link}
                   className={s.icon}
+                  disabled={!deck.cardsCount}
                   to={`/decks/${deck.id}/learn`}
                   variant={'icon'}
                 >
