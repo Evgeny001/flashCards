@@ -15,6 +15,7 @@ export const Table = forwardRef<ElementRef<'table'>, TableProps>((props, ref) =>
     </>
   )
 })
+
 type TableRowProps = ComponentPropsWithoutRef<'tr'>
 export const TableRow = forwardRef<ElementRef<'tr'>, TableRowProps>((props, ref) => {
   const { className, ...rest } = props
@@ -22,6 +23,7 @@ export const TableRow = forwardRef<ElementRef<'tr'>, TableRowProps>((props, ref)
 
   return <tr className={computedClass} ref={ref} {...rest} />
 })
+
 type TableHeadProps = ComponentPropsWithoutRef<'thead'>
 export const TableHead = forwardRef<ElementRef<'thead'>, TableHeadProps>((props, ref) => {
   const { className, ...rest } = props
@@ -29,6 +31,7 @@ export const TableHead = forwardRef<ElementRef<'thead'>, TableHeadProps>((props,
 
   return <thead className={computedClass} ref={ref} {...rest} />
 })
+
 type TableHeadCellProps = ComponentPropsWithoutRef<'th'>
 export const TableHeadCell = forwardRef<ElementRef<'th'>, TableHeadCellProps>((props, ref) => {
   const { className, ...rest } = props
@@ -36,6 +39,7 @@ export const TableHeadCell = forwardRef<ElementRef<'th'>, TableHeadCellProps>((p
 
   return <th className={computedClass} ref={ref} {...rest} />
 })
+
 type TableBodyProps = ComponentPropsWithoutRef<'tbody'>
 export const TableBody = forwardRef<ElementRef<'tbody'>, TableBodyProps>((props, ref) => {
   const { className, ...rest } = props
@@ -43,6 +47,7 @@ export const TableBody = forwardRef<ElementRef<'tbody'>, TableBodyProps>((props,
 
   return <tbody className={computedClass} ref={ref} {...rest} />
 })
+
 type TableCellProps = ComponentPropsWithoutRef<'td'>
 export const TableCell = forwardRef<ElementRef<'td'>, TableCellProps>((props, ref) => {
   const { className, ...rest } = props
