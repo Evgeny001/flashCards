@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Loader } from '@/components/ui/loader'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
+import { Sort } from '@/components/ui/table'
 import { Tabs } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
 import { PageContainer } from '@/pages/pageContainer/pageContainer'
@@ -38,6 +39,7 @@ export function DecksPage() {
   const [maxSlider, setMaxSlider] = useState(50)
   const [itemsPerPage, setItemsPerPage] = useState(5)
   const [tabValue, setTabValue] = useState('All Cards')
+  const [sort, setSort] = useState<Sort>(null)
 
   const currentUserId = me?.id
   const authorId = tabValue === 'My Cards' ? currentUserId : undefined
@@ -55,6 +57,7 @@ export function DecksPage() {
     maxCardsCount: maxSlider,
     minCardsCount: minSlider,
     name: search,
+    orderBy: sort ? `${sort.key}-${sort.direction}` : undefined,
   })
 
   const clearFilter = () => {
@@ -181,6 +184,8 @@ export function DecksPage() {
           decks={decks?.items}
           onDeleteClick={handleDeleteClick}
           onEditClick={handleEditClick}
+          onSort={setSort}
+          sort={sort}
         />
       </div>
 

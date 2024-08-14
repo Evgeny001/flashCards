@@ -1,0 +1,9 @@
+.asc,
+.desc {
+  margin-left: 6px;
+  transition: 0.2s;
+}
+
+.desc {
+  transform: rotate(180deg);
+}
