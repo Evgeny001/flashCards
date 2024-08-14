@@ -53,8 +53,7 @@
     background-color: var(--color-dark-500);
   }
 
-  &:focus-visible::before,
-  &:focus::before {
+  &:focus-visible::before {
     background-color: var(--color-dark-100);
     outline: none;
   }
