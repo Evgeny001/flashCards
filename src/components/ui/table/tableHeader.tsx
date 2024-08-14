@@ -1,7 +1,10 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
+import { ArrowSort } from '@/assets/icons/ArrowSort'
 import { TableHead, TableHeadCell, TableRow } from '@/components/ui/table/table'
 import { Typography } from '@/components/ui/typography'
+
+import s from './tableHeader.module.scss'
 
 export type Column = {
   key: string
@@ -51,7 +54,12 @@ export const TableHeader = forwardRef<ElementRef<'thead'>, TableHeaderProps>((pr
           return (
             <TableHeadCell key={key} onClick={handleSort(key, sortable)}>
               <Typography>{title}</Typography>
-              {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
+              {/*{sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}*/}
+              {sort && sort.key === key && (
+                <span>
+                  <ArrowSort className={sort.direction === 'asc' ? s.asc : s.desc} />
+                </span>
+              )}
             </TableHeadCell>
           )
         })}
