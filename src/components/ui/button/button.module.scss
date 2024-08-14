@@ -92,8 +92,18 @@
 //  text-decoration: none;
 // }
 
+.disabled {
+  pointer-events: none;
+
+  svg {
+    path {
+      fill: var(--color-dark-100);
+    }
+  }
+}
+
 .icon {
-  background-color: black;
+  background-color: transparent;
   border: none;
 
   &:hover {
