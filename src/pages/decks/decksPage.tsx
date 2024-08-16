@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { TrashOutline } from '@/assets/icons/TrashOutline'
 import { DeckDialog, FormValues } from '@/components/decks/DeckDialog/deckDialog'
@@ -12,6 +12,7 @@ import { Slider } from '@/components/ui/slider'
 import { Sort } from '@/components/ui/table'
 import { Tabs } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
+import { useDecksSearchParams } from '@/pages/decks/useDecksSearchParams'
 import { PageContainer } from '@/pages/pageContainer/pageContainer'
 import { useGetMeQuery } from '@/services/auth/auth.services'
 import {
@@ -35,14 +36,14 @@ export function DecksPage() {
 
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [minSlider, setMinSlider] = useState(0)
-  const [maxSlider, setMaxSlider] = useState(50)
   const [itemsPerPage, setItemsPerPage] = useState(5)
   const [tabValue, setTabValue] = useState('All Cards')
   const [sort, setSort] = useState<Sort>(null)
 
   const currentUserId = me?.id
   const authorId = tabValue === 'My Cards' ? currentUserId : undefined
+
+  const { changeMinMaxCard, maxCards, minCards, rangeValue } = useDecksSearchParams()
 
   const {
     currentData: decksCurrentData,
@@ -54,8 +55,8 @@ export function DecksPage() {
     authorId,
     currentPage: currentPage,
     itemsPerPage: itemsPerPage,
-    maxCardsCount: maxSlider,
-    minCardsCount: minSlider,
+    maxCardsCount: maxCards,
+    minCardsCount: minCards,
     name: search,
     orderBy: sort ? `${sort.key}-${sort.direction}` : undefined,
   })
@@ -63,8 +64,7 @@ export function DecksPage() {
   const clearFilter = () => {
     setSearch('')
     setTabValue('All Cards')
-    setMinSlider(minMaxData?.min ?? 0)
-    setMaxSlider(minMaxData?.max ?? 50)
+    changeMinMaxCard([0, minMaxData?.max ?? 50])
   }
 
   const decks = decksCurrentData ?? decksData
@@ -77,15 +77,7 @@ export function DecksPage() {
   const [deleteDeck] = useDeleteDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
 
-  //////
-
   const { data: minMaxData } = useGetMinMaxCardsQuery()
-
-  useEffect(() => {
-    if (minMaxData) {
-      setMaxSlider(minMaxData.max)
-    }
-  }, [minMaxData])
 
   const handleDeleteClick = (id: string) => {
     setDeckToDeleteId(id)
@@ -167,11 +159,8 @@ export function DecksPage() {
         <Slider
           max={minMaxData?.max ?? 50}
           min={minMaxData?.min ?? 0}
-          onValueChange={value => {
-            setMinSlider(value[0])
-            setMaxSlider(value[1])
-          }}
-          value={[minSlider, maxSlider]}
+          onValueChange={changeMinMaxCard}
+          value={rangeValue}
         />
         <Button onClick={clearFilter} variant={'secondary'}>
           <TrashOutline />
