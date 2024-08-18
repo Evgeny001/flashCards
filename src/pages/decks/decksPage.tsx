@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input'
 import { Loader } from '@/components/ui/loader'
 import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
-import { Sort } from '@/components/ui/table'
 import { Tabs } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
 import { useDecksSearchParams } from '@/pages/decks/useDecksSearchParams'
@@ -34,16 +33,29 @@ export function DecksPage() {
 
   const showEditDeckDialog = !!deckToEditId
 
-  const [search, setSearch] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(5)
+  //const [search, setSearch] = useState('')
+  // const [currentPage, setCurrentPage] = useState(1)
+  //const [itemsPerPage, setItemsPerPage] = useState(5)
   const [tabValue, setTabValue] = useState('All Cards')
-  const [sort, setSort] = useState<Sort>(null)
+  //const [sort, setSort] = useState<Sort>(null)
 
   const currentUserId = me?.id
   const authorId = tabValue === 'My Cards' ? currentUserId : undefined
 
-  const { changeMinMaxCard, maxCards, minCards, rangeValue } = useDecksSearchParams()
+  const {
+    changeItemsPerPage,
+    changeMinMaxCard,
+    changePage,
+    changeSearchValue,
+    changeSort,
+    currentPage,
+    itemsPerPage,
+    maxCards,
+    minCards,
+    rangeValue,
+    search,
+    sort,
+  } = useDecksSearchParams()
 
   const {
     currentData: decksCurrentData,
@@ -57,12 +69,12 @@ export function DecksPage() {
     itemsPerPage: itemsPerPage,
     maxCardsCount: maxCards,
     minCardsCount: minCards,
-    name: search,
+    name: search ?? '',
     orderBy: sort ? `${sort.key}-${sort.direction}` : undefined,
   })
 
   const clearFilter = () => {
-    setSearch('')
+    changeSearchValue('')
     setTabValue('All Cards')
     changeMinMaxCard([0, minMaxData?.max ?? 50])
   }
@@ -145,7 +157,7 @@ export function DecksPage() {
         </Button>
       </div>
       <div className={s.controlPanel}>
-        <Input onChangeValue={setSearch} type={'search'} value={search} />
+        <Input onChangeValue={changeSearchValue} type={'search'} value={search ?? ''} />
         <Tabs
           className={s.tabs}
           onValueChange={value => setTabValue(value)}
@@ -173,7 +185,7 @@ export function DecksPage() {
           decks={decks?.items}
           onDeleteClick={handleDeleteClick}
           onEditClick={handleEditClick}
-          onSort={setSort}
+          onSort={changeSort}
           sort={sort}
         />
       </div>
@@ -182,8 +194,8 @@ export function DecksPage() {
         <Pagination
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
-          onChangePage={setCurrentPage}
-          onPerPageChange={value => setItemsPerPage(+value)}
+          onChangePage={changePage}
+          onPerPageChange={value => changeItemsPerPage(value)}
           perPageOptions={['5', '10', '20', '50']}
           totalCount={decks?.pagination.totalPages ?? 0}
         />
