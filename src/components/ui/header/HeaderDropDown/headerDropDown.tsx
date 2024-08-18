@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { LogOut } from '@/assets/icons/LogOut'
 import { PersonOutline } from '@/assets/icons/PersonOutline'
@@ -33,6 +34,11 @@ export const HeaderDropDown = ({ profileData }: Props) => {
     navigate('/profile')
   }
 
+  const logoutHandler = async () => {
+    await logout()
+    toast.info('You are successfully logged out')
+  }
+
   return (
     <DropdownMenu trigger={trigger}>
       <DropDownItem className={s.avatar}>
@@ -51,7 +57,7 @@ export const HeaderDropDown = ({ profileData }: Props) => {
       <DropdownSeparator />
       <DropdownItemWithIcon
         icon={<LogOut className={s.icon} />}
-        onSelect={() => logout()}
+        onSelect={logoutHandler}
         value={'Log Out'}
       />
     </DropdownMenu>

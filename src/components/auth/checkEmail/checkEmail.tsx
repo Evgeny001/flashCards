@@ -7,10 +7,6 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './checkEmail.module.scss'
 
-// type Props = {
-//   email: string
-// }
-
 export const CheckEmail = () => {
   const { state } = useLocation()
 

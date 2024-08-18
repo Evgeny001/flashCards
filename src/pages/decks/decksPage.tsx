@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { TrashOutline } from '@/assets/icons/TrashOutline'
 import { DeckDialog, FormValues } from '@/components/decks/DeckDialog/deckDialog'
@@ -103,14 +104,25 @@ export function DecksPage() {
     setShowCreateNewDeckDialog(true)
   }
 
-  const onConfirmEditDeck = (data: FormValues) => {
+  const onConfirmEditDeck = async (data: FormValues) => {
     if (deckToEditId) {
-      updateDeck({ id: deckToEditId, ...data })
+      const res = await updateDeck({ id: deckToEditId, ...data })
+
+      toast.success(`deck ${res.data?.name} updated successfully.`)
     }
   }
 
-  const onConfirmCreateDeck = (data: FormValues) => {
-    createDeck(data)
+  const onConfirmDeleteDeck = async () => {
+    const res = await deleteDeck({ id: deckToDeleteId ?? '' })
+
+    toast.success(`deck ${res.data?.name} deleted successfully.`)
+    setDeckToDeleteId(null)
+  }
+
+  const onConfirmCreateDeck = async (data: FormValues) => {
+    const res = await createDeck(data)
+
+    toast.success(`deck ${res.data?.name} created`)
   }
 
   if (isLoading) {
@@ -143,10 +155,7 @@ export function DecksPage() {
       <DeleteDeckDialog
         deckName={deckToDeleteName ?? 'Selected deck'}
         onCancel={() => setDeckToDeleteId(null)}
-        onConfirm={() => {
-          deleteDeck({ id: deckToDeleteId ?? '' })
-          setDeckToDeleteId(null)
-        }}
+        onConfirm={onConfirmDeleteDeck}
         onOpenChange={() => setDeckToDeleteId(null)}
         open={!!deckToDeleteId}
       />
