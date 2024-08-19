@@ -56,6 +56,31 @@ export const authService = baseApi.injectEndpoints({
         url: '/v1/auth/recover-password',
       }),
     }),
+    // }),
+    signUp: builder.mutation<SingUpResponse, SingUpArgs>({
+      query: body => ({
+        body: body,
+        method: 'POST',
+        url: `/v1/auth/sign-up`,
+      }),
+    }),
+    // logout: builder.mutation<LogoutResponse, void>({
+    //   async onQueryStarted(_, { dispatch, queryFulfilled }) {
+    //     const { data } = await queryFulfilled
+    //
+    //     console.log(data)
+    //
+    //     if (!data) {
+    //       return
+    //     }
+    //
+    //     localStorage.removeItem('accessToken')
+    //     localStorage.removeItem('refreshToken')
+    //
+    //     dispatch(authService.util.resetApiState())
+    //     dispatch(authService.util.invalidateTags(['Me']))
+    //   },
+    //   query: () => ({ method: 'POST', url: 'v2/auth/logout' }),
     updateProfile: builder.mutation<UserResponce, any>({
       invalidatesTags: (_, error) => (error ? [] : ['Me']),
       // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -94,31 +119,6 @@ export const authService = baseApi.injectEndpoints({
         return { body: formData, method: 'PATCH', url: '/v1/auth/me' }
       },
     }),
-    // logout: builder.mutation<LogoutResponse, void>({
-    //   async onQueryStarted(_, { dispatch, queryFulfilled }) {
-    //     const { data } = await queryFulfilled
-    //
-    //     console.log(data)
-    //
-    //     if (!data) {
-    //       return
-    //     }
-    //
-    //     localStorage.removeItem('accessToken')
-    //     localStorage.removeItem('refreshToken')
-    //
-    //     dispatch(authService.util.resetApiState())
-    //     dispatch(authService.util.invalidateTags(['Me']))
-    //   },
-    //   query: () => ({ method: 'POST', url: 'v2/auth/logout' }),
-    // }),
-    signUp: builder.mutation<SingUpResponse, SingUpArgs>({
-      query: body => ({
-        body: body,
-        method: 'POST',
-        url: `/v1/auth/sign-up`,
-      }),
-    }),
   }),
 })
 
@@ -128,6 +128,6 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRecoverPasswordMutation,
-  useUpdateProfileMutation,
   useSignUpMutation,
+  useUpdateProfileMutation,
 } = authService
