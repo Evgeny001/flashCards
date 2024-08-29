@@ -1,4 +1,4 @@
-export type UserResponce = {
+export type UserResponse = {
   avatar: null | string
   created: string
   email: string
@@ -55,5 +55,11 @@ export type SingUpResponse = {
 export type SignUpErrorResponse = {
   data: {
     errorMessages: string[]
+  }
+}
+
+export type SignInErrorResponse = {
+  data: {
+    message: string
   }
 }

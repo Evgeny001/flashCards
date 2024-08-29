@@ -5,7 +5,7 @@ import {
   RecoverPasswordArgs,
   SingUpArgs,
   SingUpResponse,
-  UserResponce,
+  UserResponse,
 } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/base-api'
 
@@ -18,7 +18,7 @@ export const authService = baseApi.injectEndpoints({
         url: `/v1/auth/reset-password/${token}`,
       }),
     }),
-    getMe: builder.query<UserResponce | undefined, void>({
+    getMe: builder.query<UserResponse | undefined, void>({
       providesTags: ['Me'],
       query: () => ({
         url: `/v1/auth/me`,
@@ -81,7 +81,7 @@ export const authService = baseApi.injectEndpoints({
     //     dispatch(authService.util.invalidateTags(['Me']))
     //   },
     //   query: () => ({ method: 'POST', url: 'v2/auth/logout' }),
-    updateProfile: builder.mutation<UserResponce, any>({
+    updateProfile: builder.mutation<UserResponse, any>({
       invalidatesTags: (_, error) => (error ? [] : ['Me']),
       // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
       //   const updateResult = dispatch(
