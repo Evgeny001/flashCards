@@ -5,6 +5,7 @@ import {
   RecoverPasswordArgs,
   SingUpArgs,
   SingUpResponse,
+  UpdateProfileArgs,
   UserResponse,
 } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/base-api'
@@ -81,29 +82,31 @@ export const authService = baseApi.injectEndpoints({
     //     dispatch(authService.util.invalidateTags(['Me']))
     //   },
     //   query: () => ({ method: 'POST', url: 'v2/auth/logout' }),
-    updateProfile: builder.mutation<UserResponse, any>({
+    updateProfile: builder.mutation<UserResponse, UpdateProfileArgs>({
       invalidatesTags: (_, error) => (error ? [] : ['Me']),
-      // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-      //   const updateResult = dispatch(
-      //     authService.util.updateQueryData('getMe', undefined, draft => {
-      //       const name = arg.get('name')
-      //       const avatar = arg.get('avatar')
-      //
-      //       if (avatar instanceof File) {
-      //         draft.avatar = URL.createObjectURL(avatar)
-      //       }
-      //       if (typeof name === 'string') {
-      //         draft.name = name
-      //       }
-      //     })
-      //   )
-      //
-      //   try {
-      //     await queryFulfilled
-      //   } catch {
-      //     updateResult.undo()
-      //   }
-      // },
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        const updateResult = dispatch(
+          authService.util.updateQueryData('getMe', undefined, draft => {
+            const name = arg.name
+            const avatar = arg.avatar
+
+            if (draft) {
+              if (avatar instanceof File) {
+                draft.avatar = URL.createObjectURL(avatar)
+              }
+              if (typeof name === 'string') {
+                draft.name = name
+              }
+            }
+          })
+        )
+
+        try {
+          await queryFulfilled
+        } catch {
+          updateResult.undo()
+        }
+      },
       query: body => {
         const { avatar, name } = body
 
