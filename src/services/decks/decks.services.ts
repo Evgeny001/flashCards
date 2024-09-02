@@ -15,40 +15,20 @@ export const decksService = baseApi.injectEndpoints({
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
-          const invalidateBy = decksService.util.selectInvalidatedBy(getState(), [
-            { type: 'Decks' },
-          ])
-          //const patchResults: any[] = []
+          const res = await queryFulfilled
 
-          try {
-            const { data } = await queryFulfilled
-
-            invalidateBy.forEach(({ originalArgs }) => {
-              //patchResults.push(
-              dispatch(
-                decksService.util.updateQueryData('getDecks', originalArgs, draft => {
-                  //console.log(current(draft))
-                  // const itemToUpdateIndex = draft.items.findIndex(deck => deck.id === id)
-                  //
-                  // if (itemToUpdateIndex === -1) {
-                  //   return
-                  // }
-                  // Object.assign(draft.items[itemToUpdateIndex], args)
-                  if (originalArgs.currentPage !== 1) {
-                    return
-                  }
-                  draft.items.unshift(data)
-                  //draft.items.pop()
-                })
-              )
-              //)
-            })
-            console.log(invalidateBy)
-          } catch (e) {
-            // patchResults.forEach(patchResult => {
-            //   patchResult.undo()
-            // })
-            console.log(e)
+          for (const { endpointName, originalArgs } of decksService.util.selectInvalidatedBy(
+            getState(),
+            [{ type: 'Decks' }]
+          )) {
+            if (endpointName !== 'getDecks') {
+              continue
+            }
+            dispatch(
+              decksService.util.updateQueryData(endpointName, originalArgs, draft => {
+                draft.items.unshift(res.data)
+              })
+            )
           }
         },
         query: body => {
@@ -105,7 +85,7 @@ export const decksService = baseApi.injectEndpoints({
             patchResults.push(
               dispatch(
                 decksService.util.updateQueryData('getDecks', originalArgs, draft => {
-                  //console.log(current(draft))
+                  // console.log(current(draft))
                   const itemToUpdateIndex = draft.items.findIndex(deck => deck.id === id)
 
                   if (itemToUpdateIndex === -1) {
@@ -116,7 +96,7 @@ export const decksService = baseApi.injectEndpoints({
               )
             )
           })
-          console.log(invalidateBy)
+          // console.log(invalidateBy)
 
           try {
             await queryFulfilled

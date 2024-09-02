@@ -58,3 +58,21 @@ export type MinMaxDeckResponse = {
   max: number
   min: number
 }
+
+// error response for updateDeck, createDeck
+export type UpdateDeckErrorResponse = {
+  data: {
+    errorMessages: Array<{ field: string; message: string }>
+  }
+}
+
+// Error response for updateProfile, deleteDeck, saveGradeCard
+export type ErrorResponse = {
+  data: {
+    message: string
+    path: string
+    statusCode: number
+    timestamp: string
+  }
+  status: number
+}

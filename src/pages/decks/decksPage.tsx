@@ -22,6 +22,7 @@ import {
   useGetMinMaxCardsQuery,
   useUpdateDeckMutation,
 } from '@/services/decks/decks.services'
+import { ErrorResponse, UpdateDeckErrorResponse } from '@/services/decks/decks.types'
 
 import s from './decksPage.module.scss'
 
@@ -34,11 +35,7 @@ export function DecksPage() {
 
   const showEditDeckDialog = !!deckToEditId
 
-  //const [search, setSearch] = useState('')
-  // const [currentPage, setCurrentPage] = useState(1)
-  //const [itemsPerPage, setItemsPerPage] = useState(5)
   const [tabValue, setTabValue] = useState('All Cards')
-  //const [sort, setSort] = useState<Sort>(null)
 
   const currentUserId = me?.id
   const authorId = tabValue === 'My Cards' ? currentUserId : undefined
@@ -106,23 +103,63 @@ export function DecksPage() {
 
   const onConfirmEditDeck = async (data: FormValues) => {
     if (deckToEditId) {
-      const res = await updateDeck({ id: deckToEditId, ...data })
+      const updateDeckPromise = updateDeck({ id: deckToEditId, ...data }).unwrap()
 
-      toast.success(`deck ${res.data?.name} updated successfully.`)
+      await toast.promise(updateDeckPromise, {
+        error: {
+          render({ data }) {
+            const errorData = data as UpdateDeckErrorResponse
+
+            return `Error: ${errorData.data.errorMessages[0].message ?? 'unable to update deck'}`
+          },
+        },
+        success: {
+          render({ data }) {
+            return `deck ${data.name} updated successfully.`
+          },
+        },
+      })
     }
   }
 
   const onConfirmDeleteDeck = async () => {
-    const res = await deleteDeck({ id: deckToDeleteId ?? '' })
+    const deleteDeckPromise = deleteDeck({ id: deckToDeleteId ?? '' }).unwrap()
 
-    toast.success(`deck ${res.data?.name} deleted successfully.`)
     setDeckToDeleteId(null)
+
+    await toast.promise(deleteDeckPromise, {
+      error: {
+        render({ data }) {
+          const errorData = data as ErrorResponse
+
+          return `Error: ${errorData.data.message ?? 'unable to delete deck'}`
+        },
+      },
+      success: {
+        render({ data }) {
+          return `deck ${data.name} deleted successfully.`
+        },
+      },
+    })
   }
 
   const onConfirmCreateDeck = async (data: FormValues) => {
-    const res = await createDeck(data)
+    const createDeckPromise = createDeck(data).unwrap()
 
-    toast.success(`deck ${res.data?.name} created`)
+    await toast.promise(createDeckPromise, {
+      error: {
+        render({ data }) {
+          const errorData = data as UpdateDeckErrorResponse
+
+          return `Error: ${errorData.data.errorMessages[0].message ?? 'unable to create deck'}`
+        },
+      },
+      success: {
+        render({ data }) {
+          return `deck ${data.name} created successfully.`
+        },
+      },
+    })
   }
 
   if (isLoading) {

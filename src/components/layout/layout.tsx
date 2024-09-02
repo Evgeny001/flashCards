@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 import { Header } from '@/components/ui/header/header'
 import { useGetMeQuery } from '@/services/auth/auth.services'
-import { UserResponce } from '@/services/auth/auth.types'
+import { UserResponse } from '@/services/auth/auth.types'
 import { clsx } from 'clsx'
 
 import s from './layout.module.scss'
@@ -19,7 +19,7 @@ export const Layout = forwardRef<ElementRef<'div'>, Props>(
     const { data, isError, isLoading } = useGetMeQuery()
     const isAuth = !isError && !isLoading
 
-    const profileData = (data: UserResponce | undefined) => ({
+    const profileData = (data: UserResponse | undefined) => ({
       avatar: data?.avatar ?? '',
       email: data?.email ?? '',
       name: data?.name ?? '',
@@ -30,7 +30,7 @@ export const Layout = forwardRef<ElementRef<'div'>, Props>(
       <div ref={ref} {...rest}>
         <Header isAuth={isAuth} profile={profile} />
         <main className={classes}>
-          <Outlet context={isAuth} />
+          <Outlet />
         </main>
       </div>
     )

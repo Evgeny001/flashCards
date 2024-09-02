@@ -4,6 +4,7 @@ import { Profile } from '@/components/auth/profile'
 import { PageContainer } from '@/pages/pageContainer/pageContainer'
 import { useGetMeQuery, useUpdateProfileMutation } from '@/services/auth/auth.services'
 import { UpdateProfileArgs } from '@/services/auth/auth.types'
+import { ErrorResponse } from '@/services/decks/decks.types'
 
 export const ProfilePage = () => {
   const { data } = useGetMeQuery()
@@ -13,9 +14,19 @@ export const ProfilePage = () => {
     const updateProfilePromise = updateProfile(data).unwrap()
 
     await toast.promise(updateProfilePromise, {
-      error: 'Failed to update profile',
+      error: {
+        render({ data }) {
+          const errorData = data as ErrorResponse
+
+          return `Error: ${errorData.data.message ?? 'unable to update profile'}`
+        },
+      },
       pending: 'Updating profile...',
-      success: 'Profile updated successfully!',
+      success: {
+        render({ data }) {
+          return `Profile name successfully changed to ${data.name}`
+        },
+      },
     })
   }
 

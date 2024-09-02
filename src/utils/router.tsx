@@ -4,7 +4,6 @@ import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
-  useOutletContext,
 } from 'react-router-dom'
 
 import { Layout } from '@/components/layout/layout'
@@ -89,7 +88,9 @@ export function Router() {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = useOutletContext()
+  const { isError } = useGetMeQuery()
+
+  const isAuthenticated = !isError
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }
