@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { BackToPage } from '@/components/backToPage/backToPage'
 import { LearnCard } from '@/components/learnCard/learnCard'
@@ -11,6 +12,7 @@ import {
   useGetRandomCardQuery,
   useSaveGradeCardMutation,
 } from '@/services/deck/deck.services'
+import { ErrorResponse } from '@/services/decks/decks.types'
 
 // import s from './learnCardPage.module.scss'
 
@@ -32,7 +34,9 @@ export const LearnCardPage = () => {
         id: deckId ?? '',
       }).unwrap()
     } catch (error) {
-      console.log(error)
+      const errorMessage = error as ErrorResponse
+
+      toast.error(errorMessage.data.message ?? 'unable to save grade')
     } finally {
       setShow(false)
     }
