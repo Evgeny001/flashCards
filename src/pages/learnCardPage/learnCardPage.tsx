@@ -48,7 +48,7 @@ export const LearnCardPage = () => {
 
   return (
     <PageContainer mt={'24px'}>
-      <BackToPage text={'Back to Decks List'} />
+      <BackToPage to={'/'}> Back to Decks List </BackToPage>
       <LearnCard
         card={cardData}
         deckName={deckData?.name}
