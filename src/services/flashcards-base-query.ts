@@ -10,7 +10,19 @@ const mutex = new Mutex()
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://api.flashcards.andrii.es',
-  credentials: 'include',
+  prepareHeaders: headers => {
+    const token = localStorage.getItem('accessToken')
+
+    if (headers.get('Authorization')) {
+      return headers
+    }
+
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`)
+    }
+
+    return headers
+  },
 })
 
 export const baseQueryWithReauth: BaseQueryFn<
@@ -24,20 +36,32 @@ export const baseQueryWithReauth: BaseQueryFn<
   if (result.error && result.error.status === 401) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
-      // try to get a new token
-      const refreshResult = await baseQuery(
-        { method: 'POST', url: '/v1/auth/refresh-token' },
-        api,
-        extraOptions
-      )
+      const refreshToken = localStorage.getItem('refreshToken')
 
-      if (refreshResult.meta?.response?.status === 204) {
-        // retry the initial query
-        result = await baseQuery(args, api, extraOptions)
+      try {
+        const refreshResult = (await baseQuery(
+          {
+            headers: {
+              Authorization: `Bearer ${refreshToken}`,
+            },
+            method: 'POST',
+            url: '/v2/auth/refresh-token',
+          },
+          api,
+          extraOptions
+        )) as any
+
+        if (refreshResult.data) {
+          localStorage.setItem('accessToken', refreshResult.data.accessToken)
+          localStorage.setItem('refreshToken', refreshResult.data.refreshToken)
+          result = await baseQuery(args, api, extraOptions)
+        } else {
+          //
+        }
+      } finally {
+        release()
       }
-      release()
     } else {
-      // wait until the mutex is available without locking it
       await mutex.waitForUnlock()
       result = await baseQuery(args, api, extraOptions)
     }

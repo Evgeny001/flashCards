@@ -40,6 +40,10 @@ const publicRoutes: RouteObject[] = [
     element: <SignUpPage />,
     path: '/sign-up',
   },
+  {
+    element: <PageNotFound />,
+    path: '/*',
+  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -67,12 +71,11 @@ export const router = createBrowserRouter([
       {
         children: privateRoutes,
         element: <PrivateRoutes />,
-        errorElement: <PageNotFound />,
       },
       ...publicRoutes,
     ],
     element: <Layout />,
-    errorElement: <PageNotFound />,
+    //errorElement: <PageNotFound />,
     path: '/',
   },
 ])

@@ -55,6 +55,33 @@ export const decksService = baseApi.injectEndpoints({
       }),
       deleteDeck: builder.mutation<Deck, DeleteDeckArgs>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
+          const patchResult: any = []
+          const invalidateBy = decksService.util.selectInvalidatedBy(getState(), [
+            { type: 'Decks' },
+          ])
+
+          invalidateBy.forEach(({ originalArgs }) => {
+            patchResult.push(
+              dispatch(
+                decksService.util.updateQueryData('getDecks', originalArgs, draft => {
+                  const indexItemToDelete = draft.items.findIndex(deck => deck.id === id)
+
+                  if (indexItemToDelete === -1) {
+                    return
+                  } else {
+                    draft.items = draft.items.filter((_, index) => index !== indexItemToDelete)
+                  }
+                })
+              )
+            )
+          })
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+          }
+        },
         query: args => ({
           method: 'DELETE',
           url: `v1/decks/${args.id}`,

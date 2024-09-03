@@ -3,6 +3,9 @@
 
   cursor: pointer;
 
+  display: flex;
+  gap: 6px;
+  align-items: center;
   align-self: flex-start;
 
   margin-bottom: 36px;
@@ -10,18 +13,13 @@
   color: var(--color-light-100);
   text-decoration: none;
 
-  svg {
-    position: relative;
-    top: -1px;
-  }
+  transition: all 0.2s;
 
   &:hover {
     color: var(--color-accent-500);
 
     svg {
-      path {
-        fill: var(--color-accent-500);
-      }
+      fill: var(--color-accent-500);
     }
   }
 }

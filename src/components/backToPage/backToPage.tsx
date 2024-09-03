@@ -1,23 +1,18 @@
-import { useNavigate } from 'react-router-dom'
+import { ComponentPropsWithoutRef } from 'react'
+import { Link } from 'react-router-dom'
 
 import { ArrowBack } from '@/assets/icons/ArrowBack'
-import { Button } from '@/components/ui/button'
 
 import s from './backToPage.module.scss'
 
-type Props = {
-  text: string
-}
+export type Props = { to: string } & ComponentPropsWithoutRef<'a'>
 
-export const BackToPage = ({ text }: Props) => {
-  const navigate = useNavigate()
-
-  const handleBack = () => navigate(-1)
+export const BackToPage = (props: Props) => {
+  const { children, to, ...restProps } = props
 
   return (
-    <Button className={s.linkBack} onClick={handleBack} variant={'link'}>
-      <ArrowBack />
-      {text}
-    </Button>
+    <Link to={to} {...restProps} className={s.linkBack}>
+      <ArrowBack /> {children}
+    </Link>
   )
 }
