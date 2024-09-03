@@ -27,16 +27,16 @@ export const authService = baseApi.injectEndpoints({
     }),
     login: builder.mutation<LoginResponse, LoginArgs>({
       invalidatesTags: ['Me'],
-      // async onQueryStarted(_, { queryFulfilled }) {
-      //   const { data } = await queryFulfilled
-      //
-      //   if (!data) {
-      //     return
-      //   }
-      //
-      //   localStorage.setItem('accessToken', data.accessToken)
-      //   localStorage.setItem('refreshToken', data.refreshToken)
-      // },
+      async onQueryStarted(_, { queryFulfilled }) {
+        const { data } = await queryFulfilled
+
+        if (!data) {
+          return
+        }
+
+        localStorage.setItem('accessToken', data.accessToken)
+        localStorage.setItem('refreshToken', data.refreshToken)
+      },
       query: body => ({
         body,
         method: 'POST',
@@ -45,6 +45,11 @@ export const authService = baseApi.injectEndpoints({
     }),
     logout: builder.mutation<void, void>({
       invalidatesTags: ['Me'],
+      async onQueryStarted(_, { dispatch }) {
+        dispatch(baseApi.util.resetApiState())
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+      },
       query: () => ({
         method: 'POST',
         url: '/v1/auth/logout',
@@ -65,23 +70,6 @@ export const authService = baseApi.injectEndpoints({
         url: `/v1/auth/sign-up`,
       }),
     }),
-    // logout: builder.mutation<LogoutResponse, void>({
-    //   async onQueryStarted(_, { dispatch, queryFulfilled }) {
-    //     const { data } = await queryFulfilled
-    //
-    //     console.log(data)
-    //
-    //     if (!data) {
-    //       return
-    //     }
-    //
-    //     localStorage.removeItem('accessToken')
-    //     localStorage.removeItem('refreshToken')
-    //
-    //     dispatch(authService.util.resetApiState())
-    //     dispatch(authService.util.invalidateTags(['Me']))
-    //   },
-    //   query: () => ({ method: 'POST', url: 'v2/auth/logout' }),
     updateProfile: builder.mutation<UserResponse, UpdateProfileArgs>({
       invalidatesTags: (_, error) => (error ? [] : ['Me']),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
